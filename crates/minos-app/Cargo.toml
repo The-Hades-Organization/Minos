@@ -15,10 +15,15 @@ path = "src/main.rs"
 
 [dependencies]
 minos-core = { path = "../minos-core" }
+hades-core.workspace = true
 hades-ui.workspace = true
 gpui.workspace = true
 gpui_platform.workspace = true
 gpui-component.workspace = true
+
+[dev-dependencies]
+serde_json.workspace = true
+tempfile = "3"
 
 [lints]
 workspace = true
