@@ -2674,8 +2674,8 @@ dependencies = [
 
 [[package]]
 name = "hades-core"
-version = "0.2.5"
-source = "git+https://github.com/The-Hades-Organization/Hades-Core?tag=v0.2.5#cc447112714c7993881e79b03d44c92959fb7ac1"
+version = "0.2.6"
+source = "git+https://github.com/The-Hades-Organization/Hades-Core?tag=v0.2.6#49ce606239bcf8854caf911d95b6c80b104af1e9"
 dependencies = [
  "regex",
  "rustix",
@@ -3760,7 +3760,7 @@ dependencies = [
 name = "minos-cli"
 version = "0.1.0"
 dependencies = [
- "hades-core 0.2.5",
+ "hades-core 0.2.6",
  "minos-core",
  "serde_json",
 ]
@@ -3770,7 +3770,7 @@ name = "minos-core"
 version = "0.1.0"
 dependencies = [
  "cerberus-core",
- "hades-core 0.2.5",
+ "hades-core 0.2.6",
  "regex",
  "serde",
  "serde_json",
