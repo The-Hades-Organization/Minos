@@ -5,5 +5,12 @@ edition.workspace = true
 license.workspace = true
 repository.workspace = true
 
+[dependencies]
+hades-core.workspace = true
+cerberus-core.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+regex.workspace = true
+
 [lints]
 workspace = true

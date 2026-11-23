@@ -1,9 +1,8 @@
 //! Regra de negócio do Minos, sem interface.
 
-#[cfg(test)]
-mod tests {
-    #[test]
-    fn crate_compila() {
-        assert_eq!(env!("CARGO_PKG_NAME"), "minos-core");
-    }
-}
+pub mod check;
+pub mod documento;
+pub mod modelo;
+
+pub use check::{ContractError, Escopo};
+pub use modelo::{Modelo, Validado, exemplo, modelos};
