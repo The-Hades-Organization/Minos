@@ -1,0 +1,13 @@
+{"outputs":{
+"zeta":{"model":"explicacao","scope":"personal","plan":"p.json","url":"https://claude.ai/artifact/z/","file":"/srv/demo/zeta.html","updatedAt":"2026-02-01T00:00:00.000Z","extra":1},
+"10":{"model":"proposta","scope":"team","plan":"p.json","url":"http://claude.ai/artifact/x","file":"/srv/demo/10.html","updatedAt":"2026-02-02T00:00:00.000Z"},
+"2":{"model":"orquestracao","scope":"personal","plan":"p.md","url":7,"file":"/srv/demo/2.html","updatedAt":"2026-02-03T00:00:00.000Z"},
+"007":{"model":"orquestracao","scope":"personal","plan":"p.md","url":null,"file":"/srv/demo/007.html","updatedAt":"2026-02-04T00:00:00.000Z"},
+"Maiuscula":{"model":"proposta","scope":"personal","plan":"p","url":null,"file":"f","updatedAt":"t"},
+"modelo-ruim":{"model":"outro","scope":"personal","plan":"p","url":null,"file":"f","updatedAt":"t"},
+"escopo-ruim":{"model":"proposta","scope":"todos","plan":"p","url":null,"file":"f","updatedAt":"t"},
+"arquivo-ruim":{"model":"proposta","scope":"personal","plan":"p","url":null,"file":1,"updatedAt":"t"},
+"sem-data":{"model":"proposta","scope":"personal","plan":"p","url":null,"file":"f"},
+"lista":[1,2],
+"zeta":{"model":"explicacao","scope":"team","plan":"p.json","url":null,"file":"/srv/demo/zeta2.html","updatedAt":"2026-02-05T00:00:00.000Z"}
+},"outro":true}

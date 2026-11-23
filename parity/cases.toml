@@ -1,0 +1,302 @@
+# Matriz de paridade do Minos: `hades minos ...` (TS, Hades-Skill) contra o binário `minos`.
+# O argv é o do binário; o lado TS ganha o subcomando `minos` por `ts_cmd`. A skill (--ts e HADES_SKILL_DIR) é a
+# montada por parity/montar-skill.sh. Origem: commands/minos.ts, lib/minos-store.ts e minos-comando.test.ts:92-130.
+# O registro de saídas vem das fixtures (o publish Rust chega depois); dados fictícios.
+
+[[case]]
+id = "uso.sem-subcomando"
+argv = []
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+compare = ["stdout", "stderr", "exit"]
+
+[[case]]
+id = "uso.desconhecido"
+argv = ["xyz"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+compare = ["stdout", "stderr", "exit"]
+
+[[case]]
+id = "uso.help"
+argv = ["--help"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+compare = ["stdout", "stderr", "exit"]
+
+[[case]]
+id = "list.vazio"
+argv = ["list"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+compare = ["stdout", "stderr", "exit"]
+
+[[case]]
+id = "list.extra-ignorado"
+argv = ["list", "x"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+compare = ["stdout", "stderr", "exit"]
+
+[[case]]
+id = "list.saidas"
+argv = ["list"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+fixture = "saidas"
+compare = ["stdout", "stderr", "exit"]
+
+[[case]]
+id = "list.invalidos-ordem"
+argv = ["list"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+fixture = "invalidos"
+compare = ["stdout", "stderr", "exit"]
+
+[[case]]
+id = "list.registro-quebrado"
+argv = ["list"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+fixture = "quebrado"
+compare = ["stdout", "stderr", "exit"]
+
+[[case]]
+id = "list.outputs-array"
+argv = ["list"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+fixture = "array"
+compare = ["stdout", "stderr", "exit"]
+
+[[case]]
+id = "list.sem-instalacao"
+argv = ["list"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+env = { HADES_DATA = "" }
+compare = ["stdout", "stderr", "exit"]
+
+[[case]]
+id = "schema.sem-modelo"
+argv = ["schema"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+compare = ["stdout", "stderr", "exit"]
+
+[[case]]
+id = "schema.extra"
+argv = ["schema", "explicacao", "x"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+compare = ["stdout", "stderr", "exit"]
+
+[[case]]
+id = "schema.desconhecido"
+argv = ["schema", "nada"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+compare = ["stdout", "stderr", "exit"]
+
+[[case]]
+id = "schema.orquestracao"
+argv = ["schema", "orquestracao"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+compare = ["stdout", "stderr", "exit"]
+
+[[case]]
+id = "schema.explicacao"
+argv = ["schema", "explicacao"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+compare = ["stdout", "stderr", "exit"]
+
+[[case]]
+id = "schema.proposta"
+argv = ["schema", "proposta"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+compare = ["stdout", "stderr", "exit"]
+
+[[case]]
+id = "link.sem-args"
+argv = ["link"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+fixture = "saidas"
+compare = ["stdout", "stderr", "exit", "files:data/minos/outputs.json"]
+
+[[case]]
+id = "link.um-arg"
+argv = ["link", "proposta-demo-12"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+fixture = "saidas"
+compare = ["stdout", "stderr", "exit", "files:data/minos/outputs.json"]
+
+[[case]]
+id = "link.extra"
+argv = ["link", "proposta-demo-12", "https://claude.ai/artifact/a", "x"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+fixture = "saidas"
+compare = ["stdout", "stderr", "exit", "files:data/minos/outputs.json"]
+
+[[case]]
+id = "link.host-errado"
+argv = ["link", "orquestracao-plano-demo", "https://exemplo.invalid/artifact/abc123"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+fixture = "saidas"
+compare = ["stdout", "stderr", "exit", "files:data/minos/outputs.json"]
+
+[[case]]
+id = "link.http"
+argv = ["link", "orquestracao-plano-demo", "http://claude.ai/artifact/abc123"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+fixture = "saidas"
+compare = ["stdout", "stderr", "exit", "files:data/minos/outputs.json"]
+
+[[case]]
+id = "link.porta"
+argv = ["link", "orquestracao-plano-demo", "https://claude.ai:8443/artifact/abc123"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+fixture = "saidas"
+compare = ["stdout", "stderr", "exit", "files:data/minos/outputs.json"]
+
+[[case]]
+id = "link.credencial"
+argv = ["link", "orquestracao-plano-demo", "https://u:p@claude.ai/artifact/abc123"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+fixture = "saidas"
+compare = ["stdout", "stderr", "exit", "files:data/minos/outputs.json"]
+
+[[case]]
+id = "link.caminho-ruim"
+argv = ["link", "orquestracao-plano-demo", "https://claude.ai/artifact/a/b"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+fixture = "saidas"
+compare = ["stdout", "stderr", "exit", "files:data/minos/outputs.json"]
+
+[[case]]
+id = "link.saida-desconhecida"
+argv = ["link", "nao-existe", "https://claude.ai/artifact/abc123"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+fixture = "saidas"
+compare = ["stdout", "stderr", "exit", "files:data/minos/outputs.json"]
+
+[[case]]
+id = "link.id-invalido"
+argv = ["link", "Nao-Existe", "https://claude.ai/artifact/abc123"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+fixture = "saidas"
+compare = ["stdout", "stderr", "exit", "files:data/minos/outputs.json"]
+
+[[case]]
+id = "link.sem-registro"
+argv = ["link", "orquestracao-plano-demo", "https://claude.ai/artifact/abc123"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+compare = ["stdout", "stderr", "exit", "files:data/minos/outputs.json"]
+
+[[case]]
+id = "link.grava"
+argv = ["link", "orquestracao-plano-demo", "https://claude.ai/artifact/abc123"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+fixture = "saidas"
+compare = ["stdout", "stderr", "exit", "files:data/minos/outputs.json"]
+
+[[case]]
+id = "link.normaliza"
+argv = ["link", "proposta-demo-12", " https://CLAUDE.ai:443/x/../code/artifact/n.1_a-b/?q=1#f"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+fixture = "saidas"
+compare = ["stdout", "stderr", "exit", "files:data/minos/outputs.json"]
+
+[[case]]
+id = "link.descarta-invalidos"
+argv = ["link", "zeta", "https://claude.ai/artifact/zz"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+fixture = "invalidos"
+compare = ["stdout", "stderr", "exit", "files:data/minos/outputs.json"]
+
+[[case]]
+id = "link.indice"
+argv = ["link", "2", "https://claude.ai/artifact/dois"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+fixture = "invalidos"
+compare = ["stdout", "stderr", "exit", "files:data/minos/outputs.json"]
+
+[[case]]
+id = "open.sem-args"
+argv = ["open"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+fixture = "saidas"
+compare = ["stdout", "stderr", "exit", "files:aberto.txt"]
+
+[[case]]
+id = "open.extra"
+argv = ["open", "a", "b"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+fixture = "saidas"
+compare = ["stdout", "stderr", "exit", "files:aberto.txt"]
+
+[[case]]
+id = "open.desconhecida"
+argv = ["open", "orquestracao-nao-existe", "--print"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+fixture = "saidas"
+compare = ["stdout", "stderr", "exit", "files:aberto.txt"]
+
+[[case]]
+id = "open.id-invalido"
+argv = ["open", "Ruim", "--print"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+fixture = "saidas"
+compare = ["stdout", "stderr", "exit", "files:aberto.txt"]
+
+[[case]]
+id = "open.print-link"
+argv = ["open", "orquestracao-plano-demo-team", "--print"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+fixture = "saidas"
+compare = ["stdout", "stderr", "exit", "files:aberto.txt"]
+
+[[case]]
+id = "open.print-arquivo"
+argv = ["open", "--print", "orquestracao-plano-demo"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+fixture = "saidas"
+compare = ["stdout", "stderr", "exit", "files:aberto.txt"]
+
+[[case]]
+id = "open.print-repetido"
+argv = ["open", "--print", "proposta-demo-12", "--print"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+fixture = "saidas"
+compare = ["stdout", "stderr", "exit", "files:aberto.txt"]
+
+[[case]]
+id = "open.abre-link"
+argv = ["open", "proposta-demo-12"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+fixture = "saidas"
+compare = ["stdout", "stderr", "exit", "files:aberto.txt"]
+
+[[case]]
+id = "open.abre-arquivo"
+argv = ["open", "orquestracao-plano-demo"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+fixture = "saidas"
+compare = ["stdout", "stderr", "exit", "files:aberto.txt"]
+
+[[case]]
+id = "publish.sem-args"
+argv = ["publish"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+compare = ["stdout", "stderr", "exit"]
+
+[[case]]
+id = "publish.opcao-desconhecida"
+argv = ["publish", "--x"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+compare = ["stdout", "stderr", "exit"]
+
+[[case]]
+id = "publish.html-sem-arquivo"
+argv = ["publish", "orquestracao", "plano.md", "--html"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+compare = ["stdout", "stderr", "exit"]
+
+[[case]]
+id = "publish.tres-posicionais"
+argv = ["publish", "orquestracao", "a", "b"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+compare = ["stdout", "stderr", "exit"]
+
+[[case]]
+id = "publish.modelo-desconhecido"
+argv = ["publish", "nada", "plano.md", "--team"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+compare = ["stdout", "stderr", "exit"]

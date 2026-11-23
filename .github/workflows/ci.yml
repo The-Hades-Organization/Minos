@@ -21,11 +21,54 @@ concurrency:
 env:
   CARGO_TERM_COLOR: always
   CARGO_INCREMENTAL: 0
+  # sha do Hades-Skill contra o qual o job parity roda; trocar é mudança explícita, e o diff da matriz mostra o que mudou no TS
+  HADES_SKILL_SHA: 691fb9467964697e7c7c5d7046ad38a34880747c
+  # tag do Hades-Core de onde sai o runner da matriz
+  HADES_CORE_TAG: v0.2.6
 
 permissions:
   contents: read
 
 jobs:
+  parity:
+    name: Paridade TS x Rust
+    if: github.event_name != 'schedule'
+    timeout-minutes: 20
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/checkout@v7
+        with:
+          repository: The-Hades-Organization/Hades-Skill
+          ref: ${{ env.HADES_SKILL_SHA }}
+          path: hades-skill
+      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2.2.0
+        with:
+          bun-version: 1.4.4 # a do bun.lock da skill
+      - name: Dependências da skill
+        working-directory: hades-skill
+        run: bun install --frozen-lockfile
+      - uses: dtolnay/rust-toolchain@master
+        with:
+          toolchain: 1.96.0
+      - uses: Swatinem/rust-cache@v2
+        with:
+          save-if: ${{ github.ref == 'refs/heads/main' }}
+      - name: Runner da matriz (Hades-Core)
+        run: cargo install --locked --git https://github.com/The-Hades-Organization/Hades-Core --tag "$HADES_CORE_TAG" --root "$RUNNER_TEMP/hades-parity" hades-parity
+      - name: Compilar o Minos
+        run: cargo build --locked -p minos-cli
+      - name: Montar a skill
+        run: parity/montar-skill.sh hades-skill "$RUNNER_TEMP/skill"
+      - name: Matriz de paridade
+        run: >
+          "$RUNNER_TEMP/hades-parity/bin/hades-parity" run
+          --cases parity/cases.toml
+          --ts "$RUNNER_TEMP/skill"
+          --rust target/debug/minos
+      - name: Concorrência
+        run: parity/concorrencia.sh "$RUNNER_TEMP/skill" target/debug/minos rust
+
   core:
     name: Core (sem gpui)
     if: github.event_name != 'schedule'

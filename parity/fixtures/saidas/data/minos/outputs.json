@@ -1,0 +1,28 @@
+{
+  "outputs": {
+    "orquestracao-plano-demo": {
+      "model": "orquestracao",
+      "scope": "personal",
+      "plan": "@HOME@/plano-demo.md",
+      "url": null,
+      "file": "@HOME@/data/minos/orquestracao-plano-demo/index.html",
+      "updatedAt": "2026-01-02T03:04:05.000Z"
+    },
+    "orquestracao-plano-demo-team": {
+      "model": "orquestracao",
+      "scope": "team",
+      "plan": "@HOME@/plano-demo.md",
+      "url": "https://claude.ai/artifact/demo-1234",
+      "file": "@HOME@/data/minos/orquestracao-plano-demo-team/index.html",
+      "updatedAt": "2026-01-03T10:00:00.000Z"
+    },
+    "proposta-demo-12": {
+      "model": "proposta",
+      "scope": "personal",
+      "plan": "@HOME@/demo-12.json",
+      "url": "https://claude.ai/code/artifact/abc.def_1",
+      "file": "@HOME@/data/minos/proposta-demo-12/index.html",
+      "updatedAt": "2026-01-04T11:22:33.000Z"
+    }
+  }
+}

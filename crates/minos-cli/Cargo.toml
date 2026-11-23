@@ -11,7 +11,8 @@ path = "src/main.rs"
 
 [dependencies]
 minos-core = { path = "../minos-core" }
-clap.workspace = true
+hades-core.workspace = true
+serde_json.workspace = true
 
 [lints]
 workspace = true

@@ -1,0 +1,15 @@
+# Catálogo das configurações do Hades: chave, padrão, tipo, grupo, rótulo, como aplicar, descrição (TAB).
+# Valor do dono em $D/config.env (painel → Configurações, ou config.sh set). Precedência: variável já exportada
+# > config.env > padrão daqui. Tipos: size (512M, 4G), int:min:max, bool (0|1), percent (5%), enum:a,b,
+# repo (dono/nome no GitHub), multi:a,b,c (subconjunto, vírgulas), globs (padrões de nome com *, vírgulas), ttl (8h, 1d), login (conta do GitHub, vazio permitido), logins, emails e
+# tags (listas por vírgula, vazio permitido), id (letras, números, _ : -), digits, path (absoluto ou ~/, vazio
+# permitido), relpath (relativo, sem ..), modelmap (nome=modelo por vírgula; modelo inherit|haiku|sonnet|opus), port (1024–65535, vazio permitido),
+# cidr (sub-rede IPv4 como 172.18.0.0/16, vazio permitido), where (local, auto ou user@host), workers (host[:rotulo+rotulo], por vírgula, vazio permitido).
+# Aplicar: slice (na hora, config.sh apply-slice), services (restart dos serviços), watch
+# (reiniciar o plantão), panel (reiniciar o painel), autostart (na hora, panel.sh autostart),
+# logrotate (na hora, clean.sh apply), next (próxima execução), hooks (na hora: os hooks leem a cada chamada), agents (gravar o model: dos subagentes em
+# ~/.claude/agents). O plugin do projeto soma chaves e modos de aplicar próprios ($D/plugin/config.tsv, plugin.json).
+HADES_VERSION_CHECK_REPO	acme/demo	repo	Painel	Repositório da skill (checagem de versão)	next	Repositório no GitHub (dono/nome) de onde sai a VERSION mais recente, lida sem login (GET anônimo; o gh só entra de reserva, se o repo não for público). Só avisa; sem acesso, a checagem fica oculta.
+HADES_CERBERUS_PORTA	barra	enum:off,avisa,barra	Cerberus	Modo da Porta (o que sai)	hooks	Push, comentário de PR, artefato, túnel e release. barra: guarda reprovada impede a ação; avisa: a ação segue com aviso; off: nenhuma guarda roda. Só se muda pelo painel local ou pelo terminal do dono (reference/cerberus.md §Modos). Vale na próxima avaliação.
+HADES_CERBERUS_PORTA_TUNEL_HOSTS		globs	Cerberus	Hosts permitidos no túnel (Porta)	hooks	Padrões de host (com * e ?, por vírgula) que o túnel público pode usar. Vazio = nenhum: a guarda tunel-acesso barra. Vale na próxima avaliação.
+HADES_MINOS_TEAM	0	bool	Minos	Página do time	next	Liga a página do time do Minos (hades minos publish --team). Ela expõe o estado do trabalho a terceiros, então vem desligada; a página pessoal é sempre possível. Compartilhar o artifact é decisão sua, no claude.ai.
