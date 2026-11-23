@@ -23,7 +23,17 @@ impl Tela {
         Tela::Configuracoes,
     ];
 
-    pub fn rotulo(self) -> &'static str {
+    /// Id da tela no painel e nome aceito em `--tela`.
+    pub const fn id(self) -> &'static str {
+        match self {
+            Tela::Publicacoes => "publicacoes",
+            Tela::NovaPagina => "nova",
+            Tela::Time => "time",
+            Tela::Configuracoes => "configuracoes",
+        }
+    }
+
+    pub const fn rotulo(self) -> &'static str {
         match self {
             Tela::Publicacoes => "Publicações",
             Tela::NovaPagina => "Nova página",
@@ -32,7 +42,7 @@ impl Tela {
         }
     }
 
-    pub fn icone(self) -> IconName {
+    pub const fn icone(self) -> IconName {
         match self {
             Tela::Publicacoes => IconName::Globe,
             Tela::NovaPagina => IconName::FilePen,
@@ -43,13 +53,7 @@ impl Tela {
 
     /// Nome de tela aceito em `--tela`.
     pub fn de_nome(nome: &str) -> Option<Tela> {
-        match nome {
-            "publicacoes" => Some(Tela::Publicacoes),
-            "nova" => Some(Tela::NovaPagina),
-            "time" => Some(Tela::Time),
-            "configuracoes" => Some(Tela::Configuracoes),
-            _ => None,
-        }
+        Tela::TODAS.into_iter().find(|t| t.id() == nome)
     }
 
     pub fn de_rotulo(rotulo: &str) -> Option<Tela> {

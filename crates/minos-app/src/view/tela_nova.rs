@@ -46,14 +46,14 @@ impl MinosView {
         .detach();
     }
 
-    fn previa_pronta(&self) -> Option<&Previa> {
+    pub(super) fn previa_pronta(&self) -> Option<&Previa> {
         match &self.previa {
             Some(Ok(EstadoPrevia::Pronta(p))) => Some(p),
             _ => None,
         }
     }
 
-    fn gerar_pagina(&mut self, html: bool, cx: &mut Context<Self>) {
+    pub(super) fn gerar_pagina(&mut self, html: bool, cx: &mut Context<Self>) {
         let Some(g) = self.t_gerar.iniciar() else {
             return;
         };
@@ -79,7 +79,7 @@ impl MinosView {
         .detach();
     }
 
-    fn abrir_previa(&mut self, cx: &mut Context<Self>) {
+    pub(super) fn abrir_previa(&mut self, cx: &mut Context<Self>) {
         let Some(p) = self.previa_pronta().cloned() else {
             return;
         };

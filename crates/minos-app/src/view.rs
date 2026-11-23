@@ -1,7 +1,10 @@
 //! `MinosView`: casca (trilho, rodapé) e as telas Publicações, Nova página, Página do time e Configurações.
 
+mod embed;
 mod tela_config;
 mod tela_nova;
+
+pub use embed::telas;
 
 use std::path::PathBuf;
 use std::sync::Arc;
@@ -55,6 +58,8 @@ pub struct MinosView {
     config: Option<Result<config::Linha, String>>,
     erro_config: Option<String>,
     t_config: Tarefa,
+    /// Dentro do painel com as Configurações dele: a tela própria some.
+    integrado: bool,
 }
 
 impl MinosView {
@@ -84,6 +89,7 @@ impl MinosView {
             config: None,
             erro_config: None,
             t_config: Tarefa::default(),
+            integrado: false,
         };
         view.recarregar(cx);
         view
@@ -511,6 +517,16 @@ impl MinosView {
         pagina.child(aviso).fill_child(tabela)
     }
 
+    /// O miolo da tela `tela`, sem trilho nem rodapé.
+    fn corpo(&self, tela: Tela, cx: &mut Context<Self>) -> gpui::AnyElement {
+        match tela {
+            Tela::Publicacoes => self.tela_publicacoes(cx).into_any_element(),
+            Tela::Time => self.tela_time(cx).into_any_element(),
+            Tela::NovaPagina => self.tela_nova(cx).into_any_element(),
+            Tela::Configuracoes => self.tela_config(cx).into_any_element(),
+        }
+    }
+
     fn campo_focado(&self, window: &Window, cx: &App) -> bool {
         self.link
             .as_ref()
@@ -524,12 +540,7 @@ impl Render for MinosView {
         let p = palette(cx);
         let (esquerda, direita) = self.rodape();
         let rail = self.rail(cx);
-        let corpo = match self.tela {
-            Tela::Publicacoes => self.tela_publicacoes(cx).into_any_element(),
-            Tela::Time => self.tela_time(cx).into_any_element(),
-            Tela::NovaPagina => self.tela_nova(cx).into_any_element(),
-            Tela::Configuracoes => self.tela_config(cx).into_any_element(),
-        };
+        let corpo = self.corpo(self.tela, cx);
         div()
             .id("minos")
             .track_focus(&self.foco)

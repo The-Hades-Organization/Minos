@@ -12,7 +12,7 @@ Minos: ferramenta do Hades, reescrita em Rust.
 
 - **CLI:** o binário `minos` cobre os comandos do Minos do Hades (`list`, `schema`, `publish`, `link` e `open`). A paridade com
   a versão em TypeScript roda no CI e trava o merge quando diverge: 166 de 166 casos iguais.
-- **App:** o `minos-app` tem as 4 telas (Publicações, Nova página, Página do time e Configurações).
+- **App:** o `minos-app` tem as 4 telas (Publicações, Nova página, Página do time e Configurações) e é embutível no painel do Hades (`FerramentaEmbutida`).
 - **Ligar no Hades:** a flag `HADES_MINOS_IMPL` no Hades-Skill, que fará o `hades minos …` chamar o binário `minos`,
   ainda está a caminho. Até lá, o Hades usa a versão em TypeScript.
 
