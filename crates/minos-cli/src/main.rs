@@ -1,18 +1,24 @@
 //! `minos`: o `hades minos` (`src/commands/minos.ts`) em Rust. Parser à mão como o TS, mesmos textos e códigos de saída.
 //! Publicar num Artifact é ação da sessão do Claude, não da CLI: o `publish` grava a página e devolve o que publicar.
 
-use std::path::PathBuf;
+use std::path::{Path, PathBuf};
 use std::process::ExitCode;
 use std::time::Duration;
 
+use hades_core::clock::now_ms;
+use hades_core::config::config_value;
 use hades_core::env::Env;
 use hades_core::errors::{render_cli, render_error};
+use hades_core::fsx::{read_text, resolve};
 use hades_core::jsonfmt::json_indent;
 use hades_core::output::{HadesError, out, warn};
-use hades_core::paths::find_state_dir;
+use hades_core::paths::{find_state_dir, skill_root};
 use hades_core::proc::{RunOptions, run, which};
+use hades_core::work::{WorkOptions, load_work_env};
 use minos_core::Escopo;
-use minos_core::modelo::{Modelo, Origem, exemplo, modelos};
+use minos_core::coleta::{ErroColeta, collect};
+use minos_core::modelo::{Modelo, Origem, Orquestracao, exemplo, modelos};
+use minos_core::publicar::{Pedido, Publicado, TipoRecusa};
 use minos_core::store::{
     ARTIFACT_HOST, ErroLink, gravar_link, is_output_id, parse_artifact_url, saidas,
 };
@@ -121,33 +127,125 @@ fn schema(args: &[String]) -> Saida {
     Ok(OK)
 }
 
-/// `parsePublish` (`commands/minos.ts:52`): a mesma recusa de uso do TS; devolve o modelo.
-fn parse_publish(args: &[String]) -> Result<String, String> {
+/// `PublishArgs` (`commands/minos.ts:50`).
+struct ArgsPublish {
+    model: String,
+    plan: String,
+    html: Option<String>,
+    team: bool,
+}
+
+/// `parsePublish` (`commands/minos.ts:52`).
+fn parse_publish(args: &[String]) -> Result<ArgsPublish, String> {
     let mut positional = Vec::new();
+    let mut html = None;
+    let mut team = false;
     let mut it = args.iter();
     while let Some(arg) = it.next() {
         match arg.as_str() {
-            "--team" => {}
-            "--html" => {
-                it.next().ok_or("--html pede um arquivo")?;
-            }
+            "--team" => team = true,
+            "--html" => html = Some(it.next().ok_or("--html pede um arquivo")?.clone()),
             a if a.starts_with("--") => return Err(format!("opção desconhecida: {a}")),
             a => positional.push(a),
         }
     }
     match positional.as_slice() {
-        [model, _] => Ok((*model).to_owned()),
+        [model, plan] => Ok(ArgsPublish {
+            model: (*model).to_owned(),
+            plan: (*plan).to_owned(),
+            html,
+            team,
+        }),
         _ => Err("publish pede <modelo> e <fonte> (plano.md ou dados.json)".to_owned()),
     }
 }
 
-/// `publishCommand` (`commands/minos.ts:72`): só a recusa de uso por ora; o resto vem com a guarda e a página.
-fn publish(args: &[String]) -> Saida {
-    let model = parse_publish(args).map_err(|m| usage(&m))?;
-    Modelo::from_id(&model).ok_or_else(|| unknown_model(&model))?;
-    Err(usage(
-        "publish ainda não existe no minos: use hades minos publish",
-    ))
+/// O `collectOrchestration` padrão da CLI: lê o plano antes do registro, e o `loadWorkEnv` que falha vira recusa
+/// `input`, como o erro que o `publish` do TS captura.
+fn collect_cli(
+    env: &Env,
+    cwd: &Path,
+    plan: &Path,
+    scope: Escopo,
+    now_ms: i64,
+) -> Result<Orquestracao, ErroColeta> {
+    if read_text(plan).is_none() {
+        return Err(ErroColeta::PlanoAusente(plan.to_owned()));
+    }
+    let work =
+        load_work_env(&WorkOptions::default(), env).map_err(|e| ErroColeta::Ambiente(e.message))?;
+    collect(plan, scope, now_ms, &work, env, cwd)
+}
+
+/// `publishCommand` (`commands/minos.ts:72`).
+fn publish(env: &Env, args: &[String]) -> Saida {
+    let parsed = parse_publish(args).map_err(|m| usage(&m))?;
+    let model = Modelo::from_id(&parsed.model).ok_or_else(|| unknown_model(&parsed.model))?;
+    let state = state_dir(env)?;
+    let cwd = std::env::current_dir().unwrap_or_default();
+    let now_ms = now_ms(env).map_err(|_| unexpected())?;
+    let coletor = |plan: &Path, scope: Escopo, now: i64| collect_cli(env, &cwd, plan, scope, now);
+    let req = Pedido {
+        model,
+        plan: resolve(Path::new(&parsed.plan))
+            .to_string_lossy()
+            .into_owned(),
+        scope: if parsed.team {
+            Escopo::Time
+        } else {
+            Escopo::Pessoal
+        },
+        html_file: parsed.html,
+        state: state.clone(),
+        team_enabled: config_value(env, &cwd, "HADES_MINOS_TEAM", "0") == "1",
+        credentials: read_text(&state.join("credenciais.md")),
+        skill_roots: vec![skill_root(env)],
+        cwd: cwd.clone(),
+        now_ms,
+        collect: &coletor,
+    };
+    match minos_core::publicar::publish(&req, env) {
+        Err(r) => {
+            let head = if r.kind == TipoRecusa::Guard {
+                "o Cerberus barrou a publicação (nada foi gerado). Limpe e rode de novo:"
+            } else {
+                "minos: recusado:"
+            };
+            let lines: Vec<String> = r.reasons.iter().map(|m| format!("  {m}")).collect();
+            out(&format!("{head}\n{}", lines.join("\n")));
+            Err(if r.kind == TipoRecusa::Input {
+                USAGE_RC
+            } else {
+                FAIL
+            })
+        }
+        Ok(Publicado::Offline { file }) => {
+            out(&format!(
+                "arquivo: {}\nPágina autocontida (sem script nem recurso externo); nada saiu da máquina.",
+                file.display()
+            ));
+            Ok(OK)
+        }
+        Ok(Publicado::Artifact {
+            id,
+            file,
+            url,
+            description,
+            ..
+        }) => {
+            out(&[
+                format!("publique: {}", file.display()),
+                format!(
+                    "link registrado: {}",
+                    url.as_deref().unwrap_or("nenhum (primeira publicação)")
+                ),
+                format!("descrição: {description}"),
+                format!("depois: hades minos link {id} <url devolvida pela ferramenta Artifact>"),
+            ]
+            .join("\n"));
+            Ok(OK)
+        }
+    }
 }
 
 /// `link` (`commands/minos.ts:97`).
@@ -214,7 +312,7 @@ fn minos(env: &Env, args: &[String]) -> u8 {
     let result = match sub.as_str() {
         "list" => list(env),
         "schema" => schema(rest),
-        "publish" => publish(rest),
+        "publish" => publish(env, rest),
         "link" => link(env, rest),
         "open" => open(env, rest),
         other => Err(usage(&format!("subcomando desconhecido: {other}"))),

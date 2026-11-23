@@ -1,7 +1,7 @@
 # Matriz de paridade do Minos: `hades minos ...` (TS, Hades-Skill) contra o binário `minos`.
 # O argv é o do binário; o lado TS ganha o subcomando `minos` por `ts_cmd`. A skill (--ts e HADES_SKILL_DIR) é a
 # montada por parity/montar-skill.sh. Origem: commands/minos.ts, lib/minos-store.ts e minos-comando.test.ts:92-130.
-# O registro de saídas vem das fixtures (o publish Rust chega depois); dados fictícios.
+# O registro de saídas vem das fixtures; dados fictícios.
 
 [[case]]
 id = "uso.sem-subcomando"
@@ -312,7 +312,6 @@ fixture = "contrato"
 env = { HADES_NOW = "2026-11-20T12:00:00Z" }
 keep = ["iso"]
 compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
-pending = "publish do Rust chega no PR 6"
 
 [[case]]
 id = "contrato.e-exemplo-html"
@@ -322,7 +321,6 @@ fixture = "contrato"
 env = { HADES_NOW = "2026-11-20T12:00:00Z" }
 keep = ["iso"]
 compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
-pending = "publish do Rust chega no PR 6"
 
 [[case]]
 id = "contrato.p-exemplo"
@@ -332,7 +330,6 @@ fixture = "contrato"
 env = { HADES_NOW = "2026-11-20T12:00:00Z" }
 keep = ["iso"]
 compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
-pending = "publish do Rust chega no PR 6"
 
 [[case]]
 id = "contrato.p-exemplo-html"
@@ -342,7 +339,6 @@ fixture = "contrato"
 env = { HADES_NOW = "2026-11-20T12:00:00Z" }
 keep = ["iso"]
 compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
-pending = "publish do Rust chega no PR 6"
 
 [[case]]
 id = "contrato.e-minimo"
@@ -352,7 +348,6 @@ fixture = "contrato"
 env = { HADES_NOW = "2026-11-20T12:00:00Z" }
 keep = ["iso"]
 compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
-pending = "publish do Rust chega no PR 6"
 
 [[case]]
 id = "contrato.p-minimo"
@@ -362,7 +357,6 @@ fixture = "contrato"
 env = { HADES_NOW = "2026-11-20T12:00:00Z" }
 keep = ["iso"]
 compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
-pending = "publish do Rust chega no PR 6"
 
 [[case]]
 id = "contrato.e-extra-ignorado"
@@ -372,7 +366,6 @@ fixture = "contrato"
 env = { HADES_NOW = "2026-11-20T12:00:00Z" }
 keep = ["iso"]
 compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
-pending = "publish do Rust chega no PR 6"
 
 [[case]]
 id = "contrato.e-nulos"
@@ -382,7 +375,6 @@ fixture = "contrato"
 env = { HADES_NOW = "2026-11-20T12:00:00Z" }
 keep = ["iso"]
 compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
-pending = "publish do Rust chega no PR 6"
 
 [[case]]
 id = "contrato.e-escopo-do-arquivo"
@@ -392,7 +384,6 @@ fixture = "contrato"
 env = { HADES_NOW = "2026-11-20T12:00:00Z" }
 keep = ["iso"]
 compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
-pending = "publish do Rust chega no PR 6"
 
 [[case]]
 id = "contrato.e-escopo-time"
@@ -402,7 +393,6 @@ fixture = "contrato"
 env = { HADES_NOW = "2026-11-20T12:00:00Z", HADES_MINOS_TEAM = "1" }
 keep = ["iso"]
 compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
-pending = "publish do Rust chega no PR 6"
 
 [[case]]
 id = "contrato.e-time-desligado"
@@ -412,7 +402,6 @@ fixture = "contrato"
 env = { HADES_NOW = "2026-11-20T12:00:00Z" }
 keep = ["iso"]
 compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
-pending = "publish do Rust chega no PR 6"
 
 [[case]]
 id = "contrato.e-gerado-em"
@@ -422,7 +411,6 @@ fixture = "contrato"
 env = { HADES_NOW = "2026-11-20T12:00:00Z" }
 keep = ["iso"]
 compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
-pending = "publish do Rust chega no PR 6"
 
 [[case]]
 id = "contrato.e-gerado-sem-z"
@@ -432,7 +420,6 @@ fixture = "contrato"
 env = { HADES_NOW = "2026-11-20T12:00:00Z" }
 keep = ["iso"]
 compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
-pending = "publish do Rust chega no PR 6"
 
 [[case]]
 id = "contrato.e-gerado-z-minusculo"
@@ -442,7 +429,6 @@ fixture = "contrato"
 env = { HADES_NOW = "2026-11-20T12:00:00Z" }
 keep = ["iso"]
 compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
-pending = "publish do Rust chega no PR 6"
 
 [[case]]
 id = "contrato.e-gerado-numero"
@@ -452,7 +438,6 @@ fixture = "contrato"
 env = { HADES_NOW = "2026-11-20T12:00:00Z" }
 keep = ["iso"]
 compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
-pending = "publish do Rust chega no PR 6"
 
 [[case]]
 id = "contrato.e-modelo-errado"
@@ -462,7 +447,6 @@ fixture = "contrato"
 env = { HADES_NOW = "2026-11-20T12:00:00Z" }
 keep = ["iso"]
 compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
-pending = "publish do Rust chega no PR 6"
 
 [[case]]
 id = "contrato.modelo-trocado"
@@ -472,7 +456,6 @@ fixture = "contrato"
 env = { HADES_NOW = "2026-11-20T12:00:00Z" }
 keep = ["iso"]
 compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
-pending = "publish do Rust chega no PR 6"
 
 [[case]]
 id = "contrato.e-schema-2"
@@ -482,7 +465,6 @@ fixture = "contrato"
 env = { HADES_NOW = "2026-11-20T12:00:00Z" }
 keep = ["iso"]
 compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
-pending = "publish do Rust chega no PR 6"
 
 [[case]]
 id = "contrato.e-titulo-500"
@@ -492,7 +474,6 @@ fixture = "contrato"
 env = { HADES_NOW = "2026-11-20T12:00:00Z" }
 keep = ["iso"]
 compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
-pending = "publish do Rust chega no PR 6"
 
 [[case]]
 id = "contrato.e-titulo-501"
@@ -502,7 +483,6 @@ fixture = "contrato"
 env = { HADES_NOW = "2026-11-20T12:00:00Z" }
 keep = ["iso"]
 compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
-pending = "publish do Rust chega no PR 6"
 
 [[case]]
 id = "contrato.e-titulo-numero"
@@ -512,7 +492,6 @@ fixture = "contrato"
 env = { HADES_NOW = "2026-11-20T12:00:00Z" }
 keep = ["iso"]
 compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
-pending = "publish do Rust chega no PR 6"
 
 [[case]]
 id = "contrato.e-sem-resumo"
@@ -522,7 +501,6 @@ fixture = "contrato"
 env = { HADES_NOW = "2026-11-20T12:00:00Z" }
 keep = ["iso"]
 compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
-pending = "publish do Rust chega no PR 6"
 
 [[case]]
 id = "contrato.e-paragrafo-4001"
@@ -532,7 +510,6 @@ fixture = "contrato"
 env = { HADES_NOW = "2026-11-20T12:00:00Z" }
 keep = ["iso"]
 compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
-pending = "publish do Rust chega no PR 6"
 
 [[case]]
 id = "contrato.e-trecho-12001"
@@ -542,7 +519,6 @@ fixture = "contrato"
 env = { HADES_NOW = "2026-11-20T12:00:00Z" }
 keep = ["iso"]
 compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
-pending = "publish do Rust chega no PR 6"
 
 [[case]]
 id = "contrato.e-trechos-41"
@@ -552,7 +528,6 @@ fixture = "contrato"
 env = { HADES_NOW = "2026-11-20T12:00:00Z" }
 keep = ["iso"]
 compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
-pending = "publish do Rust chega no PR 6"
 
 [[case]]
 id = "contrato.e-lista-200"
@@ -562,7 +537,6 @@ fixture = "contrato"
 env = { HADES_NOW = "2026-11-20T12:00:00Z" }
 keep = ["iso"]
 compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
-pending = "publish do Rust chega no PR 6"
 
 [[case]]
 id = "contrato.e-lista-201"
@@ -572,7 +546,6 @@ fixture = "contrato"
 env = { HADES_NOW = "2026-11-20T12:00:00Z" }
 keep = ["iso"]
 compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
-pending = "publish do Rust chega no PR 6"
 
 [[case]]
 id = "contrato.e-secoes-objeto"
@@ -582,7 +555,6 @@ fixture = "contrato"
 env = { HADES_NOW = "2026-11-20T12:00:00Z" }
 keep = ["iso"]
 compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
-pending = "publish do Rust chega no PR 6"
 
 [[case]]
 id = "contrato.e-fluxo-item-texto"
@@ -592,7 +564,6 @@ fixture = "contrato"
 env = { HADES_NOW = "2026-11-20T12:00:00Z" }
 keep = ["iso"]
 compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
-pending = "publish do Rust chega no PR 6"
 
 [[case]]
 id = "contrato.raiz-lista"
@@ -602,7 +573,6 @@ fixture = "contrato"
 env = { HADES_NOW = "2026-11-20T12:00:00Z" }
 keep = ["iso"]
 compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
-pending = "publish do Rust chega no PR 6"
 
 [[case]]
 id = "contrato.raiz-null"
@@ -612,7 +582,6 @@ fixture = "contrato"
 env = { HADES_NOW = "2026-11-20T12:00:00Z" }
 keep = ["iso"]
 compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
-pending = "publish do Rust chega no PR 6"
 
 [[case]]
 id = "contrato.json-invalido"
@@ -622,7 +591,6 @@ fixture = "contrato"
 env = { HADES_NOW = "2026-11-20T12:00:00Z" }
 keep = ["iso"]
 compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
-pending = "publish do Rust chega no PR 6"
 
 [[case]]
 id = "contrato.dados-ausentes"
@@ -632,7 +600,6 @@ fixture = "contrato"
 env = { HADES_NOW = "2026-11-20T12:00:00Z" }
 keep = ["iso"]
 compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
-pending = "publish do Rust chega no PR 6"
 
 [[case]]
 id = "contrato.dados-grandes"
@@ -643,7 +610,6 @@ setup = "setup/grande.sh"
 env = { HADES_NOW = "2026-11-20T12:00:00Z" }
 keep = ["iso"]
 compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
-pending = "publish do Rust chega no PR 6"
 
 [[case]]
 id = "contrato.html-extensao"
@@ -653,7 +619,6 @@ fixture = "contrato"
 env = { HADES_NOW = "2026-11-20T12:00:00Z" }
 keep = ["iso"]
 compare = ["stdout", "stderr", "exit", "files:out.txt", "files:data/minos/**"]
-pending = "publish do Rust chega no PR 6"
 
 [[case]]
 id = "contrato.html-pasta-ausente"
@@ -663,7 +628,6 @@ fixture = "contrato"
 env = { HADES_NOW = "2026-11-20T12:00:00Z" }
 keep = ["iso"]
 compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
-pending = "publish do Rust chega no PR 6"
 
 [[case]]
 id = "contrato.p-tipo-outro"
@@ -673,7 +637,6 @@ fixture = "contrato"
 env = { HADES_NOW = "2026-11-20T12:00:00Z" }
 keep = ["iso"]
 compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
-pending = "publish do Rust chega no PR 6"
 
 [[case]]
 id = "contrato.p-status-invalido"
@@ -683,7 +646,6 @@ fixture = "contrato"
 env = { HADES_NOW = "2026-11-20T12:00:00Z" }
 keep = ["iso"]
 compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
-pending = "publish do Rust chega no PR 6"
 
 [[case]]
 id = "contrato.p-recomendacao-sem-opcao"
@@ -693,7 +655,6 @@ fixture = "contrato"
 env = { HADES_NOW = "2026-11-20T12:00:00Z" }
 keep = ["iso"]
 compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
-pending = "publish do Rust chega no PR 6"
 
 [[case]]
 id = "contrato.p-recomendacao-nula"
@@ -703,7 +664,6 @@ fixture = "contrato"
 env = { HADES_NOW = "2026-11-20T12:00:00Z" }
 keep = ["iso"]
 compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
-pending = "publish do Rust chega no PR 6"
 
 [[case]]
 id = "contrato.p-opcao-repetida"
@@ -713,7 +673,6 @@ fixture = "contrato"
 env = { HADES_NOW = "2026-11-20T12:00:00Z" }
 keep = ["iso"]
 compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
-pending = "publish do Rust chega no PR 6"
 
 [[case]]
 id = "contrato.p-esforco-invalido"
@@ -723,7 +682,6 @@ fixture = "contrato"
 env = { HADES_NOW = "2026-11-20T12:00:00Z" }
 keep = ["iso"]
 compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
-pending = "publish do Rust chega no PR 6"
 
 [[case]]
 id = "contrato.p-pergunta-status"
@@ -733,7 +691,6 @@ fixture = "contrato"
 env = { HADES_NOW = "2026-11-20T12:00:00Z" }
 keep = ["iso"]
 compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
-pending = "publish do Rust chega no PR 6"
 
 [[case]]
 id = "contrato.p-pergunta-sem-status"
@@ -743,7 +700,6 @@ fixture = "contrato"
 env = { HADES_NOW = "2026-11-20T12:00:00Z" }
 keep = ["iso"]
 compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
-pending = "publish do Rust chega no PR 6"
 
 [[case]]
 id = "contrato.p-risco-numero"
@@ -753,7 +709,6 @@ fixture = "contrato"
 env = { HADES_NOW = "2026-11-20T12:00:00Z" }
 keep = ["iso"]
 compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
-pending = "publish do Rust chega no PR 6"
 
 # Coletor e página orquestracao: plano (título, objetivo, estado, unidades, estimativa, bloco cercado, corte em 480),
 # registro dos agentes (estados, PR repetida, escalações, report), janelas de uso dentro e fora da retenção.
@@ -767,7 +722,6 @@ cwd = "repo"
 env = { HADES_NOW = "2026-11-20T12:00:00Z" }
 keep = ["iso"]
 compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
-pending = "publish do Rust chega no PR 6"
 
 [[case]]
 id = "orq.sem-titulo"
@@ -778,7 +732,6 @@ cwd = "repo"
 env = { HADES_NOW = "2026-11-20T12:00:00Z" }
 keep = ["iso"]
 compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
-pending = "publish do Rust chega no PR 6"
 
 [[case]]
 id = "orq.completo"
@@ -789,7 +742,6 @@ cwd = "repo"
 env = { HADES_NOW = "2026-11-20T12:00:00Z" }
 keep = ["iso"]
 compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
-pending = "publish do Rust chega no PR 6"
 
 [[case]]
 id = "orq.completo-html"
@@ -800,7 +752,6 @@ cwd = "repo"
 env = { HADES_NOW = "2026-11-20T12:00:00Z" }
 keep = ["iso"]
 compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
-pending = "publish do Rust chega no PR 6"
 
 [[case]]
 id = "orq.bloco-cercado"
@@ -811,7 +762,6 @@ cwd = "repo"
 env = { HADES_NOW = "2026-11-20T12:00:00Z" }
 keep = ["iso"]
 compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
-pending = "publish do Rust chega no PR 6"
 
 [[case]]
 id = "orq.hostil-escapado"
@@ -822,7 +772,6 @@ cwd = "repo"
 env = { HADES_NOW = "2026-11-20T12:00:00Z" }
 keep = ["iso"]
 compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
-pending = "publish do Rust chega no PR 6"
 
 [[case]]
 id = "orq.corte-480"
@@ -833,7 +782,6 @@ cwd = "repo"
 env = { HADES_NOW = "2026-11-20T12:00:00Z" }
 keep = ["iso"]
 compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
-pending = "publish do Rust chega no PR 6"
 
 [[case]]
 id = "orq.secao-por-prefixo"
@@ -844,7 +792,6 @@ cwd = "repo"
 env = { HADES_NOW = "2026-11-20T12:00:00Z" }
 keep = ["iso"]
 compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
-pending = "publish do Rust chega no PR 6"
 
 [[case]]
 id = "orq.plano-ausente"
@@ -855,7 +802,6 @@ cwd = "repo"
 env = { HADES_NOW = "2026-11-20T12:00:00Z" }
 keep = ["iso"]
 compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
-pending = "publish do Rust chega no PR 6"
 
 [[case]]
 id = "orq.fora-de-repo"
@@ -865,7 +811,6 @@ fixture = "orq"
 env = { HADES_NOW = "2026-11-20T12:00:00Z" }
 keep = ["iso"]
 compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
-pending = "publish do Rust chega no PR 6"
 
 [[case]]
 id = "orq.time-desligado"
@@ -876,7 +821,6 @@ cwd = "repo"
 env = { HADES_NOW = "2026-11-20T12:00:00Z" }
 keep = ["iso"]
 compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
-pending = "publish do Rust chega no PR 6"
 
 [[case]]
 id = "orq.time"
@@ -887,7 +831,6 @@ cwd = "repo"
 env = { HADES_NOW = "2026-11-20T12:00:00Z", HADES_MINOS_TEAM = "1" }
 keep = ["iso"]
 compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
-pending = "publish do Rust chega no PR 6"
 
 [[case]]
 id = "orq.agentes"
@@ -898,7 +841,6 @@ cwd = "repo"
 env = { HADES_NOW = "2026-11-20T12:00:00Z" }
 keep = ["iso"]
 compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
-pending = "publish do Rust chega no PR 6"
 
 [[case]]
 id = "orq.agentes-plano-vazio"
@@ -909,7 +851,6 @@ cwd = "repo"
 env = { HADES_NOW = "2026-11-20T12:00:00Z" }
 keep = ["iso"]
 compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
-pending = "publish do Rust chega no PR 6"
 
 [[case]]
 id = "orq.agentes-reports-dir"
@@ -920,7 +861,6 @@ cwd = "repo"
 env = { HADES_NOW = "2026-11-20T12:00:00Z", HADES_ORCH_REPORTS_DIR = "relatorios" }
 keep = ["iso"]
 compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
-pending = "publish do Rust chega no PR 6"
 
 [[case]]
 id = "orq.limites-dentro"
@@ -931,7 +871,6 @@ cwd = "repo"
 env = { HADES_NOW = "2026-11-20T12:00:00Z" }
 keep = ["iso"]
 compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
-pending = "publish do Rust chega no PR 6"
 
 [[case]]
 id = "orq.limites-retencao-60"
@@ -942,7 +881,6 @@ cwd = "repo"
 env = { HADES_NOW = "2026-11-20T12:00:00Z", HADES_LIMITS_RETENTION_DAYS = "60" }
 keep = ["iso"]
 compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
-pending = "publish do Rust chega no PR 6"
 
 [[case]]
 id = "orq.limites-teto"
@@ -954,7 +892,6 @@ setup = "setup/teto.sh"
 env = { HADES_NOW = "2026-11-20T12:00:00Z" }
 keep = ["iso"]
 compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
-pending = "publish do Rust chega no PR 6"
 
 [[case]]
 id = "orq.limites-retencao-invalida"
@@ -965,7 +902,6 @@ cwd = "repo"
 env = { HADES_NOW = "2026-11-20T12:00:00Z", HADES_LIMITS_RETENTION_DAYS = "abc" }
 keep = ["iso"]
 compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
-pending = "publish do Rust chega no PR 6"
 
 [[case]]
 id = "orq.limites-janela-vencida"
@@ -976,7 +912,6 @@ cwd = "repo"
 env = { HADES_NOW = "2026-11-20T14:30:00Z" }
 keep = ["iso"]
 compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
-pending = "publish do Rust chega no PR 6"
 
 [[case]]
 id = "orq.limites-fora-da-retencao"
@@ -987,7 +922,6 @@ cwd = "repo"
 env = { HADES_NOW = "2027-01-15T00:00:00Z" }
 keep = ["iso"]
 compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
-pending = "publish do Rust chega no PR 6"
 
 # Números: toFixed(2) do JS em empate (0.125 -> 0.13, 2.675 -> 2.67, 1e21 -> 1e+21), Math.round em x.5 e floats no
 # DATA e no data.json (1, 0.1, 2.5, 1e21). Origem: minos-html.ts:80-88 e plano-f4/minos.md §2.3.
@@ -1000,7 +934,6 @@ cwd = "repo"
 env = { HADES_NOW = "2026-11-20T12:00:00Z" }
 keep = ["iso"]
 compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
-pending = "publish do Rust chega no PR 6"
 
 [[case]]
 id = "num.to-fixed-empate-html"
@@ -1011,7 +944,6 @@ cwd = "repo"
 env = { HADES_NOW = "2026-11-20T12:00:00Z" }
 keep = ["iso"]
 compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
-pending = "publish do Rust chega no PR 6"
 
 [[case]]
 id = "num.floats-json"
@@ -1022,7 +954,6 @@ cwd = "repo"
 env = { HADES_NOW = "2026-11-20T12:00:00Z" }
 keep = ["iso"]
 compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
-pending = "publish do Rust chega no PR 6"
 
 [[case]]
 id = "num.floats-json-html"
@@ -1033,7 +964,6 @@ cwd = "repo"
 env = { HADES_NOW = "2026-11-20T12:00:00Z" }
 keep = ["iso"]
 compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
-pending = "publish do Rust chega no PR 6"
 
 [[case]]
 id = "num.virgula-e-invalidos"
@@ -1044,7 +974,6 @@ cwd = "repo"
 env = { HADES_NOW = "2026-11-20T12:00:00Z" }
 keep = ["iso"]
 compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
-pending = "publish do Rust chega no PR 6"
 
 [[case]]
 id = "num.round-pct-meio"
@@ -1055,4 +984,3 @@ cwd = "repo"
 env = { HADES_NOW = "2026-11-20T12:00:00Z" }
 keep = ["iso"]
 compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
-pending = "publish do Rust chega no PR 6"

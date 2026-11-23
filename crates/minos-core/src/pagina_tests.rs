@@ -7,6 +7,10 @@ use crate::modelo::{Estimativa, Limites};
 
 const TEMPLATE: &str = include_str!("../../../parity/fixtures/skill-min/kit/minos/pagina.html");
 
+fn orq(d: Orquestracao) -> Validado {
+    Validado::Orquestracao(d)
+}
+
 fn hostile() -> Orquestracao {
     let mut a = agent();
     a.name = "<img src=x onerror=1>".into();
@@ -23,7 +27,7 @@ fn hostile() -> Orquestracao {
 
 #[test]
 fn dado_entra_escapado_e_nada_vira_marcacao() {
-    let html = render_page(TEMPLATE, &hostile());
+    let html = render_page(TEMPLATE, &orq(hostile()));
     assert!(!html.contains("<script>alert"));
     assert!(!html.contains("<img src=x"));
     assert!(!html.contains("<svg onload"));
@@ -34,7 +38,7 @@ fn dado_entra_escapado_e_nada_vira_marcacao() {
 #[test]
 fn unico_script_e_o_bloco_de_dados() {
     let data = hostile();
-    let html = render_page(TEMPLATE, &data);
+    let html = render_page(TEMPLATE, &orq(data.clone()));
     assert_eq!(html.matches("<script").count(), 1);
     assert!(html.contains("<script type=\"application/json\" id=\"minos-data\">"));
     let v = Validado::Orquestracao(data);
@@ -59,7 +63,7 @@ fn bloco_escapa_separadores_de_linha() {
 
 #[test]
 fn autocontida_sem_recurso_externo_nem_evento_nem_marcador() {
-    let clean = render_page(TEMPLATE, &build(inputs())).to_lowercase();
+    let clean = render_page(TEMPLATE, &orq(build(inputs()))).to_lowercase();
     assert!(!clean.contains("http://") && !clean.contains("https://"));
     for proibido in [
         "<link", "<img", "<iframe", "@import", "url(", " src=", " href=",
@@ -74,7 +78,7 @@ fn autocontida_sem_recurso_externo_nem_evento_nem_marcador() {
 #[test]
 fn tema_e_titulo_por_escopo() {
     let data = hostile();
-    let html = render_page(TEMPLATE, &data);
+    let html = render_page(TEMPLATE, &orq(data.clone()));
     assert!(html.contains("@media (prefers-color-scheme: dark)"));
     assert!(html.contains(":root:not([data-theme=\"light\"])"));
     assert!(html.contains(":root[data-theme=\"dark\"]"));
@@ -83,7 +87,7 @@ fn tema_e_titulo_por_escopo() {
         scope: Escopo::Time,
         ..inputs()
     });
-    assert_eq!(title_of(&time), "Orquestração do time");
+    assert_eq!(title_of(&orq(time.clone())), "Orquestração do time");
     assert!(html.contains("<title>Orquestração Hades</title>"));
     assert!(html.contains("<main class=\"ops\">"));
 }
@@ -94,8 +98,11 @@ fn marcador_dentro_de_valor_nao_e_relido() {
         plan_text: PLAN.replace("Acompanhar a entrega.", "{{DATA}}"),
         ..inputs()
     });
-    assert!(render_page(TEMPLATE, &tricky).contains("{{DATA}}"));
-    assert_eq!(render_page("{{NADA}}|{{LAYOUT}}", &tricky), "{{NADA}}|ops");
+    assert!(render_page(TEMPLATE, &orq(tricky.clone())).contains("{{DATA}}"));
+    assert_eq!(
+        render_page("{{NADA}}|{{LAYOUT}}", &orq(tricky)),
+        "{{NADA}}|ops"
+    );
 }
 
 #[test]
@@ -112,7 +119,7 @@ fn esc_cobre_os_cinco_e_inline_troca_crase() {
 fn descricao_conta_ativos_perguntas_e_prs() {
     let data = build(inputs());
     assert_eq!(
-        description_of(&data),
+        description_of(&orq(data.clone())),
         "Acompanhamento de Entrega <b>de exemplo</b>: 1 agente ativo, 1 pergunta aberta, 1 PR."
     );
     let vazio = build(Entradas {
@@ -120,7 +127,7 @@ fn descricao_conta_ativos_perguntas_e_prs() {
         ..inputs()
     });
     assert_eq!(
-        description_of(&vazio),
+        description_of(&orq(vazio.clone())),
         "Acompanhamento de Entrega <b>de exemplo</b>: 0 agentes ativos, 0 perguntas abertas, 0 PRs."
     );
 }

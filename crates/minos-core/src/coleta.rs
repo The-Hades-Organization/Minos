@@ -510,6 +510,8 @@ pub fn janela_atual(janela: Janela, now_ms: i64, env: &Env, cwd: &Path) -> Optio
 pub enum ErroColeta {
     PlanoAusente(PathBuf),
     Contrato(ContractError),
+    /// O `loadWorkEnv` que falha: o TS lança e o publish recusa com a mensagem.
+    Ambiente(String),
 }
 
 impl fmt::Display for ErroColeta {
@@ -517,6 +519,7 @@ impl fmt::Display for ErroColeta {
         match self {
             Self::PlanoAusente(p) => write!(f, "plano não encontrado: {}", p.display()),
             Self::Contrato(e) => write!(f, "{e}"),
+            Self::Ambiente(m) => f.write_str(m),
         }
     }
 }

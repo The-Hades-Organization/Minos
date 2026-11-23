@@ -1,4 +1,5 @@
-//! Página do modelo `orquestracao` (`src/lib/minos-html.ts`, `src/lib/minos-esc.ts`). O modelo
+//! Página dos modelos (`src/lib/minos-html.ts`, `src/lib/minos-esc.ts`); o corpo de documento mora em
+//! [`crate::pagina_doc`]. O modelo
 //! (`kit/minos/pagina.html`) é estático e o mesmo para todos; o corpo sai dos dados já validados e todo texto passa por
 //! [`esc`]. Sem script além do bloco de dados e sem recurso externo.
 
@@ -14,6 +15,10 @@ use regex::{Captures, Regex};
 
 use crate::check::Escopo;
 use crate::modelo::{Confianca, EstadoAgente, Limite, Modelo, Orquestracao, Validado};
+use crate::pagina_doc::{
+    EXPLANATION_TITLE, explanation_description, proposal_description, proposal_title,
+    render_explanation_body, render_proposal_body,
+};
 
 const NO_VALUE: &str = "—";
 const COST_DECIMALS: usize = 2;
@@ -87,12 +92,12 @@ fn active_count(data: &Orquestracao) -> usize {
         .count()
 }
 
-fn plural(n: usize, one: &str, many: &str) -> String {
+pub(crate) fn plural(n: usize, one: &str, many: &str) -> String {
     format!("{n} {}", if n == 1 { one } else { many })
 }
 
 /// `utcText` (`minos-html.ts:31`): `AAAA-MM-DD HH:MMZ`.
-fn utc_text(iso: &str) -> String {
+pub(crate) fn utc_text(iso: &str) -> String {
     let part = |a: usize, b: usize| iso.chars().skip(a).take(b - a).collect::<String>();
     format!("{} {}Z", part(0, 10), part(11, 16))
 }
@@ -408,14 +413,31 @@ pub fn data_block(data: &Validado) -> String {
     out
 }
 
-/// `titleOf` (`minos-html.ts:105`). Só `orquestracao` por ora; o documento entra com o corpo dele.
-pub fn title_of(data: &Orquestracao) -> &'static str {
-    page_title(data)
+/// `titleOf` (`minos-html.ts:105`).
+pub fn title_of(data: &Validado) -> &'static str {
+    match data {
+        Validado::Orquestracao(d) => page_title(d),
+        Validado::Explicacao(_) => EXPLANATION_TITLE,
+        Validado::Proposta(d) => proposal_title(d),
+    }
 }
 
 /// `descriptionOf` (`minos-html.ts:110`).
-pub fn description_of(data: &Orquestracao) -> String {
-    page_description(data)
+pub fn description_of(data: &Validado) -> String {
+    match data {
+        Validado::Orquestracao(d) => page_description(d),
+        Validado::Explicacao(d) => explanation_description(d),
+        Validado::Proposta(d) => proposal_description(d),
+    }
+}
+
+/// `bodyOf` (`minos-html.ts:115`).
+fn body_of(data: &Validado) -> String {
+    match data {
+        Validado::Orquestracao(d) => render_orchestration_body(d),
+        Validado::Explicacao(d) => render_explanation_body(d),
+        Validado::Proposta(d) => render_proposal_body(d),
+    }
 }
 
 static MARCADOR: LazyLock<Regex> =
@@ -423,16 +445,16 @@ static MARCADOR: LazyLock<Regex> =
 
 /// `renderPage` (`minos-html.ts:120`): uma passada só sobre o modelo; o valor inserido nunca é relido como marcador e
 /// marcador desconhecido fica como está.
-pub fn render_page(template: &str, data: &Orquestracao) -> String {
-    let layout = if Modelo::Orquestracao == data.model {
+pub fn render_page(template: &str, data: &Validado) -> String {
+    let layout = if Modelo::Orquestracao == data.modelo() {
         "ops"
     } else {
         "doc"
     };
     let title = esc(title_of(data));
     let description = esc(&description_of(data));
-    let body = render_orchestration_body(data);
-    let block = data_block(&Validado::Orquestracao(data.clone()));
+    let body = body_of(data);
+    let block = data_block(data);
     MARCADOR
         .replace_all(template, |c: &Captures| {
             match &c[1] {
