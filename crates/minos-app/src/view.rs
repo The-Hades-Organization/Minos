@@ -8,7 +8,8 @@ use std::sync::Arc;
 
 use gpui::{
     App, AppContext, Context, Entity, FocusHandle, Focusable, InteractiveElement, IntoElement,
-    KeyDownEvent, ParentElement, Render, SharedString, Styled, Window, div, px,
+    KeyDownEvent, ParentElement, Render, SharedString, StatefulInteractiveElement, Styled, Window,
+    div, px,
 };
 use gpui_component::input::{InputEvent, InputState};
 use hades_core::Env;
@@ -19,13 +20,16 @@ use hades_ui::components::{
 };
 use hades_ui::icons::IconName;
 use hades_ui::palette;
-use hades_ui::tokens::space;
+use hades_ui::tokens::{FONT_HEADING, size, space};
 use minos_core::{Modelo, Saida};
 
 use crate::config::{self, ConfigLocal, FonteDeConfig};
 use crate::nova::{EstadoPrevia, Rascunho};
 use crate::service::{self, Dados, Gerado};
 use crate::vm::{self, COLUNAS_PUBLICACOES, COLUNAS_TIME, Filtro, Linha, Tarefa, Tela};
+
+/// `.body.ins` do design: o detalhe da publicação fica num painel lateral desta largura.
+const LARGURA_INSPECTOR: f32 = 260.0;
 
 pub struct MinosView {
     env: Env,
@@ -346,7 +350,7 @@ impl MinosView {
                 .into_any_element();
         };
         let meta = MetaList::new()
-            .label_width(96.0)
+            .label_width(72.0)
             .mono("Id", id.clone())
             .row("Modelo", s.model.title())
             .row("Escopo", vm::rotulo_do_escopo(s.scope))
@@ -364,21 +368,29 @@ impl MinosView {
         } else {
             "Abrir página"
         };
-        let mut cartao = Card::new()
-            .title(s.model.title())
-            .status(StatusBadge::new(
-                if s.url.is_some() {
-                    "com link"
-                } else {
-                    vm::SEM_LINK
-                },
-                if s.url.is_some() {
-                    hades_ui::Tone::Ok
-                } else {
-                    hades_ui::Tone::Neutral
-                },
-            ))
-            .child(meta);
+        let (rotulo_link, tom_link) = if s.url.is_some() {
+            ("com link", hades_ui::Tone::Ok)
+        } else {
+            (vm::SEM_LINK, hades_ui::Tone::Neutral)
+        };
+        let titulo = div()
+            .flex()
+            .items_start()
+            .gap(px(space::MD))
+            .child(
+                div()
+                    .flex_1()
+                    .min_w_0()
+                    .font_family(FONT_HEADING)
+                    .text_size(px(size::SECTION))
+                    .child(s.model.title()),
+            )
+            .child(
+                div()
+                    .flex_none()
+                    .child(StatusBadge::new(rotulo_link, tom_link)),
+            );
+        let mut cartao = Card::new().child(titulo).child(meta);
         if let Some(campo) = &self.link {
             cartao = cartao.child(
                 TextField::new(campo)
@@ -390,8 +402,18 @@ impl MinosView {
             cartao = cartao.child(TermBlock::new().line(g.clone()));
         }
         let gravar = cx.entity();
-        cartao
-            .action(
+        let acoes = div()
+            .flex()
+            .flex_wrap()
+            .gap(px(space::SM))
+            .child(
+                Button::new("gravar-link", "Gravar link")
+                    .primary()
+                    .icon(IconName::Link)
+                    .loading(self.t_link.carregando())
+                    .on_click(move |_, _, cx| gravar.update(cx, |v, cx| v.gravar_link(cx))),
+            )
+            .child(
                 Button::new("abrir", rotulo_abrir)
                     .icon(IconName::ExternalLink)
                     .on_click(move |_, _, cx| {
@@ -399,19 +421,12 @@ impl MinosView {
                         e.update(cx, |v, cx| v.abrir(alvo, cx));
                     }),
             )
-            .action(
+            .child(
                 CopyButton::new("copiar-link", vm::comando_do_link(&id))
                     .label("Copiar comando")
                     .copied_label("Copiado"),
-            )
-            .action(
-                Button::new("gravar-link", "Gravar link")
-                    .primary()
-                    .icon(IconName::Link)
-                    .loading(self.t_link.carregando())
-                    .on_click(move |_, _, cx| gravar.update(cx, |v, cx| v.gravar_link(cx))),
-            )
-            .into_any_element()
+            );
+        cartao.child(acoes).into_any_element()
     }
 
     fn tela_publicacoes(&self, cx: &mut Context<Self>) -> Page {
@@ -449,10 +464,21 @@ impl MinosView {
             "Nenhuma publicação deste modelo",
             cx,
         );
-        pagina
-            .child(filtro)
-            .fill_child(tabela)
-            .child(self.detalhe(cx))
+        let corpo = div()
+            .flex()
+            .flex_1()
+            .min_h_0()
+            .gap(px(space::LG))
+            .child(div().flex().flex_col().flex_1().min_w_0().child(tabela))
+            .child(
+                div()
+                    .id("inspector")
+                    .flex_none()
+                    .w(px(LARGURA_INSPECTOR))
+                    .overflow_y_scroll()
+                    .child(self.detalhe(cx)),
+            );
+        pagina.child(filtro).fill_child(corpo)
     }
 
     fn tela_time(&self, cx: &mut Context<Self>) -> Page {
