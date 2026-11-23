@@ -258,6 +258,6 @@ fn cartao_da_secao(s: &SecaoPrevia) -> Card {
     }
     Card::new()
         .title(s.titulo.clone())
-        .meta(format!("{} itens", s.linhas.len()))
+        .meta(crate::vm::itens(s.linhas.len()))
         .child(bloco)
 }

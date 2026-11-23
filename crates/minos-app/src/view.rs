@@ -20,7 +20,7 @@ use hades_ui::components::{
 use hades_ui::icons::IconName;
 use hades_ui::palette;
 use hades_ui::tokens::space;
-use minos_core::Saida;
+use minos_core::{Modelo, Saida};
 
 use crate::config::{self, ConfigLocal, FonteDeConfig};
 use crate::nova::{EstadoPrevia, Rascunho};
@@ -533,13 +533,40 @@ pub fn abrir_janela(cx: &mut App) {
 
 /// Abre a janela já na tela pedida (`--tela`).
 pub fn abrir_janela_em(cx: &mut App, tela: Tela) {
+    abrir_janela_com(
+        cx,
+        Abertura {
+            tela,
+            ..Abertura::default()
+        },
+    );
+}
+
+/// Estado inicial da janela vindo da linha de comando: tela, saída selecionada e rascunho da Nova página.
+#[derive(Clone, Debug, Default)]
+pub struct Abertura {
+    pub tela: Tela,
+    /// `--saida`: a publicação já selecionada, com o detalhe aberto.
+    pub saida: Option<String>,
+    /// `--modelo`: o modelo do rascunho da Nova página.
+    pub modelo: Option<Modelo>,
+    /// `--fonte`: a fonte do rascunho da Nova página; a prévia é calculada ao abrir a tela.
+    pub fonte: Option<PathBuf>,
+}
+
+pub fn abrir_janela_com(cx: &mut App, abertura: Abertura) {
     let aberta = cx.open_window(gpui::WindowOptions::default(), |window, cx| {
         window.set_window_title(crate::NOME);
         let cwd = std::env::current_dir().unwrap_or_default();
         let view: Entity<MinosView> = cx.new(|cx| {
             let mut v = MinosView::new(Env::from_process(), cwd, cx.focus_handle(), cx);
-            if tela != Tela::Publicacoes {
-                v.mudar_tela(tela, cx);
+            if let Some(m) = abertura.modelo {
+                v.rascunho.modelo = m;
+            }
+            v.rascunho.fonte = abertura.fonte;
+            v.selecionada = abertura.saida;
+            if abertura.tela != Tela::Publicacoes {
+                v.mudar_tela(abertura.tela, cx);
             }
             v
         });

@@ -6,8 +6,9 @@ use minos_core::store::{ARTIFACT_HOST, Saidas, parse_artifact_url};
 use minos_core::{Escopo, Modelo, Saida, modelos};
 
 /// Telas do trilho (`design/minos.html`, plano F4 §6).
-#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+#[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
 pub enum Tela {
+    #[default]
     Publicacoes,
     NovaPagina,
     Time,
@@ -144,6 +145,15 @@ pub fn rotulo_do_escopo(e: Escopo) -> &'static str {
 }
 
 pub const SEM_LINK: &str = "sem link";
+
+/// Contagem com o substantivo no número certo: "1 item", "3 itens".
+pub fn itens(n: usize) -> String {
+    if n == 1 {
+        "1 item".to_owned()
+    } else {
+        format!("{n} itens")
+    }
+}
 
 pub const COLUNAS_PUBLICACOES: [&str; 6] =
     ["Id", "Modelo", "Escopo", "Fonte", "Atualizado", "Link"];

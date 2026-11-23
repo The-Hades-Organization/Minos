@@ -235,3 +235,10 @@ fn rodape_conta_saidas_e_links() {
     assert_eq!(rodape(1, 1), "1 saída · 1 sem link");
     assert_eq!(rodape(3, 2), "3 saídas · 2 sem link");
 }
+
+#[test]
+fn itens_no_singular_e_no_plural() {
+    assert_eq!(itens(1), "1 item");
+    assert_eq!(itens(0), "0 itens");
+    assert_eq!(itens(3), "3 itens");
+}

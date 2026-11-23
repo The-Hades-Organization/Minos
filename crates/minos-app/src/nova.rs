@@ -259,7 +259,7 @@ fn campos(o: &Map<String, Value>) -> Vec<String> {
                     .filter_map(Value::as_str)
                     .collect::<Vec<_>>()
                     .join(", "),
-                Value::Array(a) if !a.is_empty() => format!("{} itens", a.len()),
+                Value::Array(a) if !a.is_empty() => crate::vm::itens(a.len()),
                 _ => escalar(v)?,
             };
             Some(format!("{}: {valor}", rotulo_da_chave(k)))
