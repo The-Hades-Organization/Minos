@@ -300,3 +300,759 @@ id = "publish.modelo-desconhecido"
 argv = ["publish", "nada", "plano.md", "--team"]
 ts_cmd = ["{skill}/src/cli.ts", "minos"]
 compare = ["stdout", "stderr", "exit"]
+
+# Contrato dos documentos: recusa com o caminho do campo (nunca o valor), extras ignorados, tetos, enums, utc, lista
+# ausente vira [] e opcional ausente vira null. Exemplos do schema ida e volta. Origem: minos-doc.ts, minos-check.ts,
+# minos-publish.ts:38-52 e minos-documento.test.ts:28-53. HADES_NOW fixa o generatedAt.
+[[case]]
+id = "contrato.e-exemplo"
+argv = ["publish", "explicacao", "e-exemplo.json"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+fixture = "contrato"
+env = { HADES_NOW = "2026-11-20T12:00:00Z" }
+keep = ["iso"]
+compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
+pending = "publish do Rust chega no PR 6"
+
+[[case]]
+id = "contrato.e-exemplo-html"
+argv = ["publish", "explicacao", "e-exemplo.json", "--html", "out.html"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+fixture = "contrato"
+env = { HADES_NOW = "2026-11-20T12:00:00Z" }
+keep = ["iso"]
+compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
+pending = "publish do Rust chega no PR 6"
+
+[[case]]
+id = "contrato.p-exemplo"
+argv = ["publish", "proposta", "p-exemplo.json"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+fixture = "contrato"
+env = { HADES_NOW = "2026-11-20T12:00:00Z" }
+keep = ["iso"]
+compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
+pending = "publish do Rust chega no PR 6"
+
+[[case]]
+id = "contrato.p-exemplo-html"
+argv = ["publish", "proposta", "p-exemplo.json", "--html", "out.html"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+fixture = "contrato"
+env = { HADES_NOW = "2026-11-20T12:00:00Z" }
+keep = ["iso"]
+compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
+pending = "publish do Rust chega no PR 6"
+
+[[case]]
+id = "contrato.e-minimo"
+argv = ["publish", "explicacao", "e-minimo.json"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+fixture = "contrato"
+env = { HADES_NOW = "2026-11-20T12:00:00Z" }
+keep = ["iso"]
+compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
+pending = "publish do Rust chega no PR 6"
+
+[[case]]
+id = "contrato.p-minimo"
+argv = ["publish", "proposta", "p-minimo.json"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+fixture = "contrato"
+env = { HADES_NOW = "2026-11-20T12:00:00Z" }
+keep = ["iso"]
+compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
+pending = "publish do Rust chega no PR 6"
+
+[[case]]
+id = "contrato.e-extra-ignorado"
+argv = ["publish", "explicacao", "e-extra.json"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+fixture = "contrato"
+env = { HADES_NOW = "2026-11-20T12:00:00Z" }
+keep = ["iso"]
+compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
+pending = "publish do Rust chega no PR 6"
+
+[[case]]
+id = "contrato.e-nulos"
+argv = ["publish", "explicacao", "e-nulos.json"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+fixture = "contrato"
+env = { HADES_NOW = "2026-11-20T12:00:00Z" }
+keep = ["iso"]
+compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
+pending = "publish do Rust chega no PR 6"
+
+[[case]]
+id = "contrato.e-escopo-do-arquivo"
+argv = ["publish", "explicacao", "e-escopo-do-arquivo.json"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+fixture = "contrato"
+env = { HADES_NOW = "2026-11-20T12:00:00Z" }
+keep = ["iso"]
+compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
+pending = "publish do Rust chega no PR 6"
+
+[[case]]
+id = "contrato.e-escopo-time"
+argv = ["publish", "explicacao", "e-minimo.json", "--team"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+fixture = "contrato"
+env = { HADES_NOW = "2026-11-20T12:00:00Z", HADES_MINOS_TEAM = "1" }
+keep = ["iso"]
+compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
+pending = "publish do Rust chega no PR 6"
+
+[[case]]
+id = "contrato.e-time-desligado"
+argv = ["publish", "explicacao", "e-minimo.json", "--team"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+fixture = "contrato"
+env = { HADES_NOW = "2026-11-20T12:00:00Z" }
+keep = ["iso"]
+compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
+pending = "publish do Rust chega no PR 6"
+
+[[case]]
+id = "contrato.e-gerado-em"
+argv = ["publish", "explicacao", "e-gerado-em.json"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+fixture = "contrato"
+env = { HADES_NOW = "2026-11-20T12:00:00Z" }
+keep = ["iso"]
+compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
+pending = "publish do Rust chega no PR 6"
+
+[[case]]
+id = "contrato.e-gerado-sem-z"
+argv = ["publish", "explicacao", "e-gerado-sem-z.json"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+fixture = "contrato"
+env = { HADES_NOW = "2026-11-20T12:00:00Z" }
+keep = ["iso"]
+compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
+pending = "publish do Rust chega no PR 6"
+
+[[case]]
+id = "contrato.e-gerado-z-minusculo"
+argv = ["publish", "explicacao", "e-gerado-z-minusculo.json"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+fixture = "contrato"
+env = { HADES_NOW = "2026-11-20T12:00:00Z" }
+keep = ["iso"]
+compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
+pending = "publish do Rust chega no PR 6"
+
+[[case]]
+id = "contrato.e-gerado-numero"
+argv = ["publish", "explicacao", "e-gerado-numero.json"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+fixture = "contrato"
+env = { HADES_NOW = "2026-11-20T12:00:00Z" }
+keep = ["iso"]
+compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
+pending = "publish do Rust chega no PR 6"
+
+[[case]]
+id = "contrato.e-modelo-errado"
+argv = ["publish", "explicacao", "e-modelo-errado.json"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+fixture = "contrato"
+env = { HADES_NOW = "2026-11-20T12:00:00Z" }
+keep = ["iso"]
+compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
+pending = "publish do Rust chega no PR 6"
+
+[[case]]
+id = "contrato.modelo-trocado"
+argv = ["publish", "proposta", "e-minimo.json"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+fixture = "contrato"
+env = { HADES_NOW = "2026-11-20T12:00:00Z" }
+keep = ["iso"]
+compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
+pending = "publish do Rust chega no PR 6"
+
+[[case]]
+id = "contrato.e-schema-2"
+argv = ["publish", "explicacao", "e-schema-2.json"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+fixture = "contrato"
+env = { HADES_NOW = "2026-11-20T12:00:00Z" }
+keep = ["iso"]
+compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
+pending = "publish do Rust chega no PR 6"
+
+[[case]]
+id = "contrato.e-titulo-500"
+argv = ["publish", "explicacao", "e-titulo-500.json"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+fixture = "contrato"
+env = { HADES_NOW = "2026-11-20T12:00:00Z" }
+keep = ["iso"]
+compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
+pending = "publish do Rust chega no PR 6"
+
+[[case]]
+id = "contrato.e-titulo-501"
+argv = ["publish", "explicacao", "e-titulo-501.json"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+fixture = "contrato"
+env = { HADES_NOW = "2026-11-20T12:00:00Z" }
+keep = ["iso"]
+compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
+pending = "publish do Rust chega no PR 6"
+
+[[case]]
+id = "contrato.e-titulo-numero"
+argv = ["publish", "explicacao", "e-titulo-numero.json"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+fixture = "contrato"
+env = { HADES_NOW = "2026-11-20T12:00:00Z" }
+keep = ["iso"]
+compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
+pending = "publish do Rust chega no PR 6"
+
+[[case]]
+id = "contrato.e-sem-resumo"
+argv = ["publish", "explicacao", "e-sem-resumo.json"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+fixture = "contrato"
+env = { HADES_NOW = "2026-11-20T12:00:00Z" }
+keep = ["iso"]
+compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
+pending = "publish do Rust chega no PR 6"
+
+[[case]]
+id = "contrato.e-paragrafo-4001"
+argv = ["publish", "explicacao", "e-paragrafo-4001.json"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+fixture = "contrato"
+env = { HADES_NOW = "2026-11-20T12:00:00Z" }
+keep = ["iso"]
+compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
+pending = "publish do Rust chega no PR 6"
+
+[[case]]
+id = "contrato.e-trecho-12001"
+argv = ["publish", "explicacao", "e-trecho-12001.json"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+fixture = "contrato"
+env = { HADES_NOW = "2026-11-20T12:00:00Z" }
+keep = ["iso"]
+compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
+pending = "publish do Rust chega no PR 6"
+
+[[case]]
+id = "contrato.e-trechos-41"
+argv = ["publish", "explicacao", "e-trechos-41.json"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+fixture = "contrato"
+env = { HADES_NOW = "2026-11-20T12:00:00Z" }
+keep = ["iso"]
+compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
+pending = "publish do Rust chega no PR 6"
+
+[[case]]
+id = "contrato.e-lista-200"
+argv = ["publish", "explicacao", "e-lista-200.json"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+fixture = "contrato"
+env = { HADES_NOW = "2026-11-20T12:00:00Z" }
+keep = ["iso"]
+compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
+pending = "publish do Rust chega no PR 6"
+
+[[case]]
+id = "contrato.e-lista-201"
+argv = ["publish", "explicacao", "e-lista-201.json"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+fixture = "contrato"
+env = { HADES_NOW = "2026-11-20T12:00:00Z" }
+keep = ["iso"]
+compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
+pending = "publish do Rust chega no PR 6"
+
+[[case]]
+id = "contrato.e-secoes-objeto"
+argv = ["publish", "explicacao", "e-secoes-objeto.json"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+fixture = "contrato"
+env = { HADES_NOW = "2026-11-20T12:00:00Z" }
+keep = ["iso"]
+compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
+pending = "publish do Rust chega no PR 6"
+
+[[case]]
+id = "contrato.e-fluxo-item-texto"
+argv = ["publish", "explicacao", "e-fluxo-item-texto.json"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+fixture = "contrato"
+env = { HADES_NOW = "2026-11-20T12:00:00Z" }
+keep = ["iso"]
+compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
+pending = "publish do Rust chega no PR 6"
+
+[[case]]
+id = "contrato.raiz-lista"
+argv = ["publish", "explicacao", "raiz-lista.json"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+fixture = "contrato"
+env = { HADES_NOW = "2026-11-20T12:00:00Z" }
+keep = ["iso"]
+compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
+pending = "publish do Rust chega no PR 6"
+
+[[case]]
+id = "contrato.raiz-null"
+argv = ["publish", "proposta", "raiz-null.json"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+fixture = "contrato"
+env = { HADES_NOW = "2026-11-20T12:00:00Z" }
+keep = ["iso"]
+compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
+pending = "publish do Rust chega no PR 6"
+
+[[case]]
+id = "contrato.json-invalido"
+argv = ["publish", "explicacao", "invalido.json"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+fixture = "contrato"
+env = { HADES_NOW = "2026-11-20T12:00:00Z" }
+keep = ["iso"]
+compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
+pending = "publish do Rust chega no PR 6"
+
+[[case]]
+id = "contrato.dados-ausentes"
+argv = ["publish", "explicacao", "nao-existe.json"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+fixture = "contrato"
+env = { HADES_NOW = "2026-11-20T12:00:00Z" }
+keep = ["iso"]
+compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
+pending = "publish do Rust chega no PR 6"
+
+[[case]]
+id = "contrato.dados-grandes"
+argv = ["publish", "explicacao", "grande.json"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+fixture = "contrato"
+setup = "setup/grande.sh"
+env = { HADES_NOW = "2026-11-20T12:00:00Z" }
+keep = ["iso"]
+compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
+pending = "publish do Rust chega no PR 6"
+
+[[case]]
+id = "contrato.html-extensao"
+argv = ["publish", "explicacao", "e-minimo.json", "--html", "out.txt"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+fixture = "contrato"
+env = { HADES_NOW = "2026-11-20T12:00:00Z" }
+keep = ["iso"]
+compare = ["stdout", "stderr", "exit", "files:out.txt", "files:data/minos/**"]
+pending = "publish do Rust chega no PR 6"
+
+[[case]]
+id = "contrato.html-pasta-ausente"
+argv = ["publish", "explicacao", "e-minimo.json", "--html", "nao/existe/out.html"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+fixture = "contrato"
+env = { HADES_NOW = "2026-11-20T12:00:00Z" }
+keep = ["iso"]
+compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
+pending = "publish do Rust chega no PR 6"
+
+[[case]]
+id = "contrato.p-tipo-outro"
+argv = ["publish", "proposta", "p-tipo-outro.json"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+fixture = "contrato"
+env = { HADES_NOW = "2026-11-20T12:00:00Z" }
+keep = ["iso"]
+compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
+pending = "publish do Rust chega no PR 6"
+
+[[case]]
+id = "contrato.p-status-invalido"
+argv = ["publish", "proposta", "p-status-invalido.json"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+fixture = "contrato"
+env = { HADES_NOW = "2026-11-20T12:00:00Z" }
+keep = ["iso"]
+compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
+pending = "publish do Rust chega no PR 6"
+
+[[case]]
+id = "contrato.p-recomendacao-sem-opcao"
+argv = ["publish", "proposta", "p-recomendacao-sem-opcao.json"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+fixture = "contrato"
+env = { HADES_NOW = "2026-11-20T12:00:00Z" }
+keep = ["iso"]
+compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
+pending = "publish do Rust chega no PR 6"
+
+[[case]]
+id = "contrato.p-recomendacao-nula"
+argv = ["publish", "proposta", "p-recomendacao-nula.json"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+fixture = "contrato"
+env = { HADES_NOW = "2026-11-20T12:00:00Z" }
+keep = ["iso"]
+compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
+pending = "publish do Rust chega no PR 6"
+
+[[case]]
+id = "contrato.p-opcao-repetida"
+argv = ["publish", "proposta", "p-opcao-repetida.json"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+fixture = "contrato"
+env = { HADES_NOW = "2026-11-20T12:00:00Z" }
+keep = ["iso"]
+compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
+pending = "publish do Rust chega no PR 6"
+
+[[case]]
+id = "contrato.p-esforco-invalido"
+argv = ["publish", "proposta", "p-esforco-invalido.json"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+fixture = "contrato"
+env = { HADES_NOW = "2026-11-20T12:00:00Z" }
+keep = ["iso"]
+compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
+pending = "publish do Rust chega no PR 6"
+
+[[case]]
+id = "contrato.p-pergunta-status"
+argv = ["publish", "proposta", "p-pergunta-status.json"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+fixture = "contrato"
+env = { HADES_NOW = "2026-11-20T12:00:00Z" }
+keep = ["iso"]
+compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
+pending = "publish do Rust chega no PR 6"
+
+[[case]]
+id = "contrato.p-pergunta-sem-status"
+argv = ["publish", "proposta", "p-pergunta-sem-status.json"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+fixture = "contrato"
+env = { HADES_NOW = "2026-11-20T12:00:00Z" }
+keep = ["iso"]
+compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
+pending = "publish do Rust chega no PR 6"
+
+[[case]]
+id = "contrato.p-risco-numero"
+argv = ["publish", "proposta", "p-risco-numero.json"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+fixture = "contrato"
+env = { HADES_NOW = "2026-11-20T12:00:00Z" }
+keep = ["iso"]
+compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
+pending = "publish do Rust chega no PR 6"
+
+# Coletor e página orquestracao: plano (título, objetivo, estado, unidades, estimativa, bloco cercado, corte em 480),
+# registro dos agentes (estados, PR repetida, escalações, report), janelas de uso dentro e fora da retenção.
+# Origem: minos-collect.ts, minos-limits.ts, minos-html.ts e minos-modelo.test.ts:54-175. cwd = repo de remote acme/demo.
+[[case]]
+id = "orq.plano-vazio"
+argv = ["publish", "orquestracao", "../planos/vazio.md"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+fixture = "orq"
+cwd = "repo"
+env = { HADES_NOW = "2026-11-20T12:00:00Z" }
+keep = ["iso"]
+compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
+pending = "publish do Rust chega no PR 6"
+
+[[case]]
+id = "orq.sem-titulo"
+argv = ["publish", "orquestracao", "../planos/sem-titulo.md"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+fixture = "orq"
+cwd = "repo"
+env = { HADES_NOW = "2026-11-20T12:00:00Z" }
+keep = ["iso"]
+compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
+pending = "publish do Rust chega no PR 6"
+
+[[case]]
+id = "orq.completo"
+argv = ["publish", "orquestracao", "../planos/completo.md"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+fixture = "orq"
+cwd = "repo"
+env = { HADES_NOW = "2026-11-20T12:00:00Z" }
+keep = ["iso"]
+compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
+pending = "publish do Rust chega no PR 6"
+
+[[case]]
+id = "orq.completo-html"
+argv = ["publish", "orquestracao", "../planos/completo.md", "--html", "../out.html"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+fixture = "orq"
+cwd = "repo"
+env = { HADES_NOW = "2026-11-20T12:00:00Z" }
+keep = ["iso"]
+compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
+pending = "publish do Rust chega no PR 6"
+
+[[case]]
+id = "orq.bloco-cercado"
+argv = ["publish", "orquestracao", "../planos/cercado.md"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+fixture = "orq"
+cwd = "repo"
+env = { HADES_NOW = "2026-11-20T12:00:00Z" }
+keep = ["iso"]
+compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
+pending = "publish do Rust chega no PR 6"
+
+[[case]]
+id = "orq.hostil-escapado"
+argv = ["publish", "orquestracao", "../planos/hostil.md"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+fixture = "orq"
+cwd = "repo"
+env = { HADES_NOW = "2026-11-20T12:00:00Z" }
+keep = ["iso"]
+compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
+pending = "publish do Rust chega no PR 6"
+
+[[case]]
+id = "orq.corte-480"
+argv = ["publish", "orquestracao", "../planos/longo.md"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+fixture = "orq"
+cwd = "repo"
+env = { HADES_NOW = "2026-11-20T12:00:00Z" }
+keep = ["iso"]
+compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
+pending = "publish do Rust chega no PR 6"
+
+[[case]]
+id = "orq.secao-por-prefixo"
+argv = ["publish", "orquestracao", "../planos/objetivo-titulo.md"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+fixture = "orq"
+cwd = "repo"
+env = { HADES_NOW = "2026-11-20T12:00:00Z" }
+keep = ["iso"]
+compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
+pending = "publish do Rust chega no PR 6"
+
+[[case]]
+id = "orq.plano-ausente"
+argv = ["publish", "orquestracao", "../planos/nao-existe.md"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+fixture = "orq"
+cwd = "repo"
+env = { HADES_NOW = "2026-11-20T12:00:00Z" }
+keep = ["iso"]
+compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
+pending = "publish do Rust chega no PR 6"
+
+[[case]]
+id = "orq.fora-de-repo"
+argv = ["publish", "orquestracao", "planos/completo.md"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+fixture = "orq"
+env = { HADES_NOW = "2026-11-20T12:00:00Z" }
+keep = ["iso"]
+compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
+pending = "publish do Rust chega no PR 6"
+
+[[case]]
+id = "orq.time-desligado"
+argv = ["publish", "orquestracao", "../planos/completo.md", "--team"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+fixture = "orq"
+cwd = "repo"
+env = { HADES_NOW = "2026-11-20T12:00:00Z" }
+keep = ["iso"]
+compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
+pending = "publish do Rust chega no PR 6"
+
+[[case]]
+id = "orq.time"
+argv = ["publish", "orquestracao", "../planos/completo.md", "--team"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+fixture = "orq"
+cwd = "repo"
+env = { HADES_NOW = "2026-11-20T12:00:00Z", HADES_MINOS_TEAM = "1" }
+keep = ["iso"]
+compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
+pending = "publish do Rust chega no PR 6"
+
+[[case]]
+id = "orq.agentes"
+argv = ["publish", "orquestracao", "../planos/completo.md"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+fixture = "orq-agentes"
+cwd = "repo"
+env = { HADES_NOW = "2026-11-20T12:00:00Z" }
+keep = ["iso"]
+compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
+pending = "publish do Rust chega no PR 6"
+
+[[case]]
+id = "orq.agentes-plano-vazio"
+argv = ["publish", "orquestracao", "../planos/vazio.md"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+fixture = "orq-agentes"
+cwd = "repo"
+env = { HADES_NOW = "2026-11-20T12:00:00Z" }
+keep = ["iso"]
+compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
+pending = "publish do Rust chega no PR 6"
+
+[[case]]
+id = "orq.agentes-reports-dir"
+argv = ["publish", "orquestracao", "../planos/completo.md"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+fixture = "orq-agentes"
+cwd = "repo"
+env = { HADES_NOW = "2026-11-20T12:00:00Z", HADES_ORCH_REPORTS_DIR = "relatorios" }
+keep = ["iso"]
+compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
+pending = "publish do Rust chega no PR 6"
+
+[[case]]
+id = "orq.limites-dentro"
+argv = ["publish", "orquestracao", "../planos/completo.md"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+fixture = "orq-limites"
+cwd = "repo"
+env = { HADES_NOW = "2026-11-20T12:00:00Z" }
+keep = ["iso"]
+compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
+pending = "publish do Rust chega no PR 6"
+
+[[case]]
+id = "orq.limites-retencao-60"
+argv = ["publish", "orquestracao", "../planos/completo.md"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+fixture = "orq-limites"
+cwd = "repo"
+env = { HADES_NOW = "2026-11-20T12:00:00Z", HADES_LIMITS_RETENTION_DAYS = "60" }
+keep = ["iso"]
+compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
+pending = "publish do Rust chega no PR 6"
+
+[[case]]
+id = "orq.limites-teto"
+argv = ["publish", "orquestracao", "../planos/completo.md"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+fixture = "orq-limites"
+cwd = "repo"
+setup = "setup/teto.sh"
+env = { HADES_NOW = "2026-11-20T12:00:00Z" }
+keep = ["iso"]
+compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
+pending = "publish do Rust chega no PR 6"
+
+[[case]]
+id = "orq.limites-retencao-invalida"
+argv = ["publish", "orquestracao", "../planos/completo.md"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+fixture = "orq-limites"
+cwd = "repo"
+env = { HADES_NOW = "2026-11-20T12:00:00Z", HADES_LIMITS_RETENTION_DAYS = "abc" }
+keep = ["iso"]
+compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
+pending = "publish do Rust chega no PR 6"
+
+[[case]]
+id = "orq.limites-janela-vencida"
+argv = ["publish", "orquestracao", "../planos/completo.md"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+fixture = "orq-limites"
+cwd = "repo"
+env = { HADES_NOW = "2026-11-20T14:30:00Z" }
+keep = ["iso"]
+compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
+pending = "publish do Rust chega no PR 6"
+
+[[case]]
+id = "orq.limites-fora-da-retencao"
+argv = ["publish", "orquestracao", "../planos/completo.md"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+fixture = "orq-limites"
+cwd = "repo"
+env = { HADES_NOW = "2027-01-15T00:00:00Z" }
+keep = ["iso"]
+compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
+pending = "publish do Rust chega no PR 6"
+
+# Números: toFixed(2) do JS em empate (0.125 -> 0.13, 2.675 -> 2.67, 1e21 -> 1e+21), Math.round em x.5 e floats no
+# DATA e no data.json (1, 0.1, 2.5, 1e21). Origem: minos-html.ts:80-88 e plano-f4/minos.md §2.3.
+[[case]]
+id = "num.to-fixed-empate"
+argv = ["publish", "orquestracao", "../planos/num-empate.md"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+fixture = "orq"
+cwd = "repo"
+env = { HADES_NOW = "2026-11-20T12:00:00Z" }
+keep = ["iso"]
+compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
+pending = "publish do Rust chega no PR 6"
+
+[[case]]
+id = "num.to-fixed-empate-html"
+argv = ["publish", "orquestracao", "../planos/num-empate.md", "--html", "../out.html"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+fixture = "orq"
+cwd = "repo"
+env = { HADES_NOW = "2026-11-20T12:00:00Z" }
+keep = ["iso"]
+compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
+pending = "publish do Rust chega no PR 6"
+
+[[case]]
+id = "num.floats-json"
+argv = ["publish", "orquestracao", "../planos/num-json.md"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+fixture = "orq"
+cwd = "repo"
+env = { HADES_NOW = "2026-11-20T12:00:00Z" }
+keep = ["iso"]
+compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
+pending = "publish do Rust chega no PR 6"
+
+[[case]]
+id = "num.floats-json-html"
+argv = ["publish", "orquestracao", "../planos/num-json.md", "--html", "../out.html"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+fixture = "orq"
+cwd = "repo"
+env = { HADES_NOW = "2026-11-20T12:00:00Z" }
+keep = ["iso"]
+compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
+pending = "publish do Rust chega no PR 6"
+
+[[case]]
+id = "num.virgula-e-invalidos"
+argv = ["publish", "orquestracao", "../planos/num-virgula.md"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+fixture = "orq"
+cwd = "repo"
+env = { HADES_NOW = "2026-11-20T12:00:00Z" }
+keep = ["iso"]
+compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
+pending = "publish do Rust chega no PR 6"
+
+[[case]]
+id = "num.round-pct-meio"
+argv = ["publish", "orquestracao", "../planos/num-empate.md"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+fixture = "orq-limites"
+cwd = "repo"
+env = { HADES_NOW = "2026-11-20T12:00:00Z" }
+keep = ["iso"]
+compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
+pending = "publish do Rust chega no PR 6"

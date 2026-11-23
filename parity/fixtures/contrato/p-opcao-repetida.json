@@ -1,0 +1,132 @@
+{
+  "model": "proposta",
+  "schema": 1,
+  "kind": "correcao",
+  "status": "em-discussao",
+  "title": "Reprocessar pedidos presos",
+  "summary": "Proponho tentar de novo com espera crescente (opção A): resolve o caso medido sem operação manual e muda só o consumidor.",
+  "source": {
+    "repo": "dono/repo",
+    "ref": "main@abc1234",
+    "paths": [
+      "src/pedidos/"
+    ]
+  },
+  "context": [
+    "Em 3 de novembro, 41 pedidos ficaram presos depois de uma queda do banco de 2 minutos (log do consumidor)."
+  ],
+  "problem": [
+    "O consumidor descarta a mensagem na primeira falha (`src/pedidos/consumidor.ts:88`), então uma queda curta perde o pedido."
+  ],
+  "goals": [
+    "Pedido preso por falha transitória volta a andar sozinho."
+  ],
+  "nonGoals": [
+    "Mudar o formato do evento."
+  ],
+  "currentFlow": [
+    {
+      "step": "O consumidor falha e descarta a mensagem",
+      "where": "src/pedidos/consumidor.ts:88",
+      "detail": null
+    }
+  ],
+  "proposedFlow": [
+    {
+      "step": "O consumidor falha e agenda nova tentativa",
+      "where": "src/pedidos/consumidor.ts",
+      "detail": "Espera de 1, 4 e 16 s; depois da terceira, vai para a fila de mortos."
+    }
+  ],
+  "options": [
+    {
+      "id": "A",
+      "title": "Nova tentativa com espera crescente",
+      "summary": "Três tentativas no próprio consumidor antes da fila de mortos.",
+      "pros": [
+        "Cobre a queda de 2 minutos medida."
+      ],
+      "cons": [
+        "Segura a partição durante as esperas."
+      ],
+      "effort": "medio",
+      "risk": "baixo",
+      "touches": [
+        "src/pedidos/consumidor.ts"
+      ],
+      "sketch": []
+    },
+    {
+      "id": "B",
+      "title": "Fila de mortos e reprocesso manual",
+      "summary": "Toda falha vai direto para a fila de mortos; alguém reprocessa.",
+      "pros": [
+        "Não segura a partição."
+      ],
+      "cons": [
+        "Depende de alguém olhar a fila."
+      ],
+      "effort": "baixo",
+      "risk": "medio",
+      "touches": [
+        "src/pedidos/consumidor.ts"
+      ],
+      "sketch": []
+    },
+    {
+      "id": "A",
+      "title": "Nova tentativa com espera crescente",
+      "summary": "Três tentativas no próprio consumidor antes da fila de mortos.",
+      "pros": [
+        "Cobre a queda de 2 minutos medida."
+      ],
+      "cons": [
+        "Segura a partição durante as esperas."
+      ],
+      "effort": "medio",
+      "risk": "baixo",
+      "touches": [
+        "src/pedidos/consumidor.ts"
+      ],
+      "sketch": []
+    }
+  ],
+  "recommendation": {
+    "option": "A",
+    "why": [
+      "A queda medida dura menos que a soma das esperas (21 s), então a maioria se resolve sem gente."
+    ]
+  },
+  "plan": [
+    {
+      "step": "Spec da nova tentativa",
+      "where": null,
+      "detail": "Antes do código."
+    },
+    {
+      "step": "Teste com o banco derrubado no meio do consumo",
+      "where": null,
+      "detail": null
+    }
+  ],
+  "risks": [
+    {
+      "risk": "Esperas somadas atrasam a partição inteira",
+      "mitigation": "Teto de 21 s por mensagem; acima disso, fila de mortos."
+    }
+  ],
+  "questions": [
+    {
+      "id": "Q1",
+      "question": "Quedas acima de 21 s acontecem? Não achei métrica disso.",
+      "status": "aberta",
+      "answer": null
+    }
+  ],
+  "references": [
+    {
+      "label": "Log do consumidor de 3/11",
+      "ref": "observabilidade, consulta salva pedidos-presos"
+    }
+  ]
+}

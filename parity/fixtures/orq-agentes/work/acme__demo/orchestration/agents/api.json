@@ -1,0 +1,9 @@
+{
+  "name": "api",
+  "mode": "impl",
+  "state": "working",
+  "phase": "implementando",
+  "branch": "skill/api",
+  "pr": 12,
+  "worktree": "@HOME@/wt/api"
+}

@@ -1,0 +1,12 @@
+{
+  "model": "proposta",
+  "schema": 1,
+  "kind": "correcao",
+  "title": "t",
+  "summary": "s",
+  "risks": [
+    {
+      "risk": 7
+    }
+  ]
+}

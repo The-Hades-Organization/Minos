@@ -1,0 +1,18 @@
+{
+  "model": "proposta",
+  "schema": 1,
+  "kind": "correcao",
+  "title": "t",
+  "summary": "s",
+  "questions": [
+    {
+      "id": "Q1",
+      "question": "q?"
+    },
+    {
+      "id": "Q2",
+      "question": "q?",
+      "status": "fechada"
+    }
+  ]
+}

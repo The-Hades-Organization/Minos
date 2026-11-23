@@ -1,0 +1,9 @@
+{
+  "name": "web",
+  "mode": "impl",
+  "state": "voando",
+  "phase": "",
+  "branch": "skill/api",
+  "pr": 12,
+  "worktree": "@HOME@/wt/web"
+}

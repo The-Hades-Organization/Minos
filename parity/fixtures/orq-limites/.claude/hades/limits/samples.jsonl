@@ -1,0 +1,6 @@
+{"at": "2026-11-20T10:00:00Z", "five": {"pct": 30, "resetsAt": 1795183200}}
+{"at": "2026-10-01T12:00:00Z", "five": {"pct": 11, "resetsAt": 1795179600}, "seven": {"pct": 0.5, "resetsAt": 1795521600}}
+{"at": "2026-11-20T11:00:00Z", "five": {"pct": 42.5, "resetsAt": 1795183200}}
+linha quebrada
+{"at": "n\u00e3o \u00e9 data", "five": {"pct": 99, "resetsAt": 1795179600}}
+{"at": "2026-11-20T11:30:00Z", "five": {"pct": -1, "resetsAt": 1795179600}, "seven": {"pct": "80", "resetsAt": 1795179600}}
