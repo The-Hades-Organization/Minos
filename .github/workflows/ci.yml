@@ -68,6 +68,8 @@ jobs:
           --rust target/debug/minos
       - name: Concorrência
         run: parity/concorrencia.sh "$RUNNER_TEMP/skill" target/debug/minos rust
+      - name: Guarda sem cerberus nem hades no PATH
+        run: parity/sem-binario.sh "$RUNNER_TEMP/skill" target/debug/minos
 
   core:
     name: Core (sem gpui)

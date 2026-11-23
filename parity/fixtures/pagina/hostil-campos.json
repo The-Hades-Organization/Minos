@@ -1,0 +1,56 @@
+{
+  "model": "explicacao",
+  "schema": 1,
+  "title": "Como o pedido vira registro",
+  "question": "<b>q</b> & `<u>`",
+  "summary": "resumo com <a href=\"javascript:x\">link</a>",
+  "source": {
+    "repo": "dono/<repo>",
+    "ref": "main@<abc>",
+    "paths": [
+      "src/<x>/"
+    ]
+  },
+  "flow": [
+    {
+      "step": "`<s>` passo",
+      "where": "a.ts:<1>",
+      "detail": "<em>d</em>"
+    }
+  ],
+  "sections": [
+    {
+      "title": "Validação",
+      "paragraphs": [
+        "`valida` recusa o corpo inteiro no primeiro campo inválido; a resposta lista só esse campo."
+      ],
+      "code": [
+        {
+          "file": "src/pedidos/rota.ts",
+          "lines": "40-48",
+          "lang": "ts",
+          "snippet": "export function valida(corpo: unknown): Pedido {\n  return esquema.parse(corpo);\n}",
+          "note": "A recusa acontece no parse."
+        }
+      ]
+    }
+  ],
+  "files": [
+    {
+      "path": "<p>.ts",
+      "role": "papel `<r>`"
+    }
+  ],
+  "glossary": [
+    {
+      "term": "<t>",
+      "meaning": "`<m>` & m"
+    }
+  ],
+  "caveats": [
+    "<c> `x`"
+  ],
+  "nextQuestions": [
+    "<n>?"
+  ]
+}

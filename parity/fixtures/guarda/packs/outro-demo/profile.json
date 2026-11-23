@@ -1,0 +1,13 @@
+{
+  "schema": "hades.profile/1",
+  "name": "outro-demo",
+  "identity": {
+    "repo": "outra/outro-demo",
+    "vocabulary": [
+      "Faturix"
+    ],
+    "aliases": [
+      "outrinho"
+    ]
+  }
+}

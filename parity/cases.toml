@@ -984,3 +984,485 @@ cwd = "repo"
 env = { HADES_NOW = "2026-11-20T12:00:00Z" }
 keep = ["iso"]
 compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
+
+# Página dos documentos: escape de todo dado, só a crase vira <code>, título por tipo da proposta e id da saída pelo
+# nome do arquivo. Origem: minos-doc-html.ts, minos-html.ts:titleOf, minos-store.ts:29 e minos-documento.test.ts:54-131.
+
+[[case]]
+id = "pagina.hostil-titulo"
+argv = ["publish", "explicacao", "hostil-titulo.json", "--html", "out.html"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+fixture = "pagina"
+env = { HADES_NOW = "2026-11-20T12:00:00Z" }
+keep = ["iso"]
+compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
+
+[[case]]
+id = "pagina.hostil-crase"
+argv = ["publish", "explicacao", "hostil-crase.json", "--html", "out.html"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+fixture = "pagina"
+env = { HADES_NOW = "2026-11-20T12:00:00Z" }
+keep = ["iso"]
+compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
+
+[[case]]
+id = "pagina.hostil-trecho"
+argv = ["publish", "explicacao", "hostil-trecho.json", "--html", "out.html"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+fixture = "pagina"
+env = { HADES_NOW = "2026-11-20T12:00:00Z" }
+keep = ["iso"]
+compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
+
+[[case]]
+id = "pagina.crase-mista"
+argv = ["publish", "explicacao", "crase-mista.json", "--html", "out.html"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+fixture = "pagina"
+env = { HADES_NOW = "2026-11-20T12:00:00Z" }
+keep = ["iso"]
+compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
+
+[[case]]
+id = "pagina.crase-impar"
+argv = ["publish", "explicacao", "crase-impar.json", "--html", "out.html"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+fixture = "pagina"
+env = { HADES_NOW = "2026-11-20T12:00:00Z" }
+keep = ["iso"]
+compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
+
+[[case]]
+id = "pagina.crase-varias"
+argv = ["publish", "explicacao", "crase-varias.json", "--html", "out.html"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+fixture = "pagina"
+env = { HADES_NOW = "2026-11-20T12:00:00Z" }
+keep = ["iso"]
+compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
+
+[[case]]
+id = "pagina.hostil-campos"
+argv = ["publish", "explicacao", "hostil-campos.json", "--html", "out.html"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+fixture = "pagina"
+env = { HADES_NOW = "2026-11-20T12:00:00Z" }
+keep = ["iso"]
+compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
+
+[[case]]
+id = "pagina.hostil-proposta"
+argv = ["publish", "proposta", "hostil-proposta.json", "--html", "out.html"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+fixture = "pagina"
+env = { HADES_NOW = "2026-11-20T12:00:00Z" }
+keep = ["iso"]
+compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
+
+[[case]]
+id = "pagina.tipo-implementacao"
+argv = ["publish", "proposta", "tipo-implementacao.json"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+fixture = "pagina"
+env = { HADES_NOW = "2026-11-20T12:00:00Z" }
+keep = ["iso"]
+compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
+
+[[case]]
+id = "pagina.tipo-correcao"
+argv = ["publish", "proposta", "tipo-correcao.json"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+fixture = "pagina"
+env = { HADES_NOW = "2026-11-20T12:00:00Z" }
+keep = ["iso"]
+compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
+
+[[case]]
+id = "pagina.tipo-fluxo"
+argv = ["publish", "proposta", "tipo-fluxo.json"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+fixture = "pagina"
+env = { HADES_NOW = "2026-11-20T12:00:00Z" }
+keep = ["iso"]
+compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
+
+[[case]]
+id = "pagina.tipo-refatoracao"
+argv = ["publish", "proposta", "tipo-refatoracao.json"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+fixture = "pagina"
+env = { HADES_NOW = "2026-11-20T12:00:00Z" }
+keep = ["iso"]
+compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
+
+[[case]]
+id = "pagina.tipo-discussao"
+argv = ["publish", "proposta", "tipo-discussao.json"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+fixture = "pagina"
+env = { HADES_NOW = "2026-11-20T12:00:00Z" }
+keep = ["iso"]
+compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
+
+[[case]]
+id = "pagina.id-espacos"
+argv = ["publish", "proposta", "Retry Pedidos.json"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+fixture = "pagina"
+env = { HADES_NOW = "2026-11-20T12:00:00Z" }
+keep = ["iso"]
+compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
+
+[[case]]
+id = "pagina.id-team"
+argv = ["publish", "explicacao", "fluxo.json", "--team"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+fixture = "pagina"
+env = { HADES_NOW = "2026-11-20T12:00:00Z", HADES_MINOS_TEAM = "1" }
+keep = ["iso"]
+compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
+
+[[case]]
+id = "pagina.id-acento-extensao"
+argv = ["publish", "explicacao", "Ação_Nova.JSON"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+fixture = "pagina"
+env = { HADES_NOW = "2026-11-20T12:00:00Z" }
+keep = ["iso"]
+compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
+
+[[case]]
+id = "pagina.id-so-simbolos"
+argv = ["publish", "explicacao", "@@@.json"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+fixture = "pagina"
+env = { HADES_NOW = "2026-11-20T12:00:00Z" }
+keep = ["iso"]
+compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
+
+[[case]]
+id = "pagina.id-dupla-extensao"
+argv = ["publish", "explicacao", "x.md.json"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+fixture = "pagina"
+env = { HADES_NOW = "2026-11-20T12:00:00Z" }
+keep = ["iso"]
+compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
+
+[[case]]
+id = "pagina.id-corte-60"
+argv = ["publish", "explicacao", "nome-bem-comprido-nome-bem-comprido-nome-bem-comprido-nome-bem-comprido-nome-bem-comprido-.json"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+fixture = "pagina"
+env = { HADES_NOW = "2026-11-20T12:00:00Z" }
+keep = ["iso"]
+compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
+
+# Guarda antes de gravar: varredura em memória (credencial, caminho da máquina, e-mail, credenciais.md, nome de projeto)
+# e depois o Cerberus (porta/segredo-diff) sobre a página. Recusada, nada fica em data/minos nem no --html. Projeto
+# ativo (acme-demo, remote do repo) dispensado só na página pessoal de explicação/proposta. Origem: minos-guard.ts,
+# minos-publish.ts:82, minos-comando.test.ts:47-91, minos-guarda-projeto.test.ts e minos-modelo.test.ts:193-220.
+
+[[case]]
+id = "guarda.ativo-explicacao"
+argv = ["publish", "explicacao", "../ativo-e.json"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+fixture = "guarda"
+cwd = "repo"
+env = { HADES_NOW = "2026-11-20T12:00:00Z" }
+keep = ["iso"]
+compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
+
+[[case]]
+id = "guarda.ativo-proposta"
+argv = ["publish", "proposta", "../ativo-p.json"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+fixture = "guarda"
+cwd = "repo"
+env = { HADES_NOW = "2026-11-20T12:00:00Z" }
+keep = ["iso"]
+compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
+
+[[case]]
+id = "guarda.ativo-html"
+argv = ["publish", "explicacao", "../ativo-e.json", "--html", "../out.html"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+fixture = "guarda"
+cwd = "repo"
+env = { HADES_NOW = "2026-11-20T12:00:00Z" }
+keep = ["iso"]
+compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
+
+[[case]]
+id = "guarda.ativo-nome"
+argv = ["publish", "explicacao", "../ativo-nome.json"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+fixture = "guarda"
+cwd = "repo"
+env = { HADES_NOW = "2026-11-20T12:00:00Z" }
+keep = ["iso"]
+compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
+
+[[case]]
+id = "guarda.ativo-vocabulario"
+argv = ["publish", "explicacao", "../ativo-vocab.json"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+fixture = "guarda"
+cwd = "repo"
+env = { HADES_NOW = "2026-11-20T12:00:00Z" }
+keep = ["iso"]
+compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
+
+[[case]]
+id = "guarda.ativo-team"
+argv = ["publish", "explicacao", "../ativo-e.json", "--team"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+fixture = "guarda"
+cwd = "repo"
+env = { HADES_NOW = "2026-11-20T12:00:00Z", HADES_MINOS_TEAM = "1" }
+keep = ["iso"]
+compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
+
+[[case]]
+id = "guarda.ativo-sem-perfil"
+argv = ["publish", "explicacao", "../ativo-e.json"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+fixture = "guarda"
+cwd = "sem-perfil"
+setup = "setup/sem-perfil.sh"
+env = { HADES_NOW = "2026-11-20T12:00:00Z" }
+keep = ["iso"]
+compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
+
+[[case]]
+id = "guarda.ativo-fora-de-repo"
+argv = ["publish", "explicacao", "ativo-e.json"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+fixture = "guarda"
+env = { HADES_NOW = "2026-11-20T12:00:00Z" }
+keep = ["iso"]
+compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
+
+[[case]]
+id = "guarda.ativo-email"
+argv = ["publish", "explicacao", "../ativo-email.json"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+fixture = "guarda"
+cwd = "repo"
+env = { HADES_NOW = "2026-11-20T12:00:00Z" }
+keep = ["iso"]
+compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
+
+[[case]]
+id = "guarda.ativo-orquestracao"
+argv = ["publish", "orquestracao", "../planos/ativo.md"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+fixture = "guarda"
+cwd = "repo"
+env = { HADES_NOW = "2026-11-20T12:00:00Z" }
+keep = ["iso"]
+compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
+
+[[case]]
+id = "guarda.outro-repo"
+argv = ["publish", "explicacao", "../outro-repo.json"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+fixture = "guarda"
+cwd = "repo"
+env = { HADES_NOW = "2026-11-20T12:00:00Z" }
+keep = ["iso"]
+compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
+
+[[case]]
+id = "guarda.outro-nome"
+argv = ["publish", "explicacao", "../outro-nome.json"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+fixture = "guarda"
+cwd = "repo"
+env = { HADES_NOW = "2026-11-20T12:00:00Z" }
+keep = ["iso"]
+compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
+
+[[case]]
+id = "guarda.outro-apelido"
+argv = ["publish", "explicacao", "../outro-alias.json"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+fixture = "guarda"
+cwd = "repo"
+env = { HADES_NOW = "2026-11-20T12:00:00Z" }
+keep = ["iso"]
+compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
+
+[[case]]
+id = "guarda.outro-vocabulario"
+argv = ["publish", "explicacao", "../outro-vocab.json"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+fixture = "guarda"
+cwd = "repo"
+env = { HADES_NOW = "2026-11-20T12:00:00Z" }
+keep = ["iso"]
+compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
+
+[[case]]
+id = "guarda.credencial-trecho"
+argv = ["publish", "explicacao", "../cred-trecho.json"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+fixture = "guarda"
+cwd = "repo"
+env = { HADES_NOW = "2026-11-20T12:00:00Z" }
+keep = ["iso"]
+compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
+
+[[case]]
+id = "guarda.credencial-proposta"
+argv = ["publish", "proposta", "../cred-proposta.json"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+fixture = "guarda"
+cwd = "repo"
+env = { HADES_NOW = "2026-11-20T12:00:00Z" }
+keep = ["iso"]
+compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
+
+[[case]]
+id = "guarda.credencial-html"
+argv = ["publish", "explicacao", "../cred-trecho.json", "--html", "../out.html"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+fixture = "guarda"
+cwd = "repo"
+env = { HADES_NOW = "2026-11-20T12:00:00Z" }
+keep = ["iso"]
+compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
+
+[[case]]
+id = "guarda.credencial-exemplo"
+argv = ["publish", "explicacao", "../cred-exemplo.json"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+fixture = "guarda"
+cwd = "repo"
+env = { HADES_NOW = "2026-11-20T12:00:00Z" }
+keep = ["iso"]
+compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
+
+[[case]]
+id = "guarda.credencial-jwt"
+argv = ["publish", "explicacao", "../cred-jwt.json"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+fixture = "guarda"
+cwd = "repo"
+env = { HADES_NOW = "2026-11-20T12:00:00Z" }
+keep = ["iso"]
+compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
+
+[[case]]
+id = "guarda.credencial-variavel"
+argv = ["publish", "explicacao", "../cred-var.json"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+fixture = "guarda"
+cwd = "repo"
+env = { HADES_NOW = "2026-11-20T12:00:00Z" }
+keep = ["iso"]
+compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
+
+[[case]]
+id = "guarda.credencial-orquestracao"
+argv = ["publish", "orquestracao", "../planos/cred.md"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+fixture = "guarda"
+cwd = "repo"
+env = { HADES_NOW = "2026-11-20T12:00:00Z" }
+keep = ["iso"]
+compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
+
+[[case]]
+id = "guarda.caminho"
+argv = ["publish", "explicacao", "../caminho.json"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+fixture = "guarda"
+cwd = "repo"
+env = { HADES_NOW = "2026-11-20T12:00:00Z" }
+keep = ["iso"]
+compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
+
+[[case]]
+id = "guarda.email"
+argv = ["publish", "explicacao", "../email.json"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+fixture = "guarda"
+cwd = "repo"
+env = { HADES_NOW = "2026-11-20T12:00:00Z" }
+keep = ["iso"]
+compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
+
+[[case]]
+id = "guarda.email-noreply"
+argv = ["publish", "explicacao", "../email-noreply.json"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+fixture = "guarda"
+cwd = "repo"
+env = { HADES_NOW = "2026-11-20T12:00:00Z" }
+keep = ["iso"]
+compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
+
+[[case]]
+id = "guarda.cofre"
+argv = ["publish", "explicacao", "../cofre.json"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+fixture = "guarda"
+cwd = "repo"
+setup = "setup/cofre.sh"
+env = { HADES_NOW = "2026-11-20T12:00:00Z" }
+keep = ["iso"]
+compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
+
+[[case]]
+id = "guarda.cofre-curto"
+argv = ["publish", "explicacao", "../cofre-curto.json"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+fixture = "guarda"
+cwd = "repo"
+setup = "setup/cofre.sh"
+env = { HADES_NOW = "2026-11-20T12:00:00Z" }
+keep = ["iso"]
+compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
+
+[[case]]
+id = "guarda.varios"
+argv = ["publish", "explicacao", "../varios.json"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+fixture = "guarda"
+cwd = "repo"
+env = { HADES_NOW = "2026-11-20T12:00:00Z" }
+keep = ["iso"]
+compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
+
+[[case]]
+id = "guarda.time-desligado"
+argv = ["publish", "explicacao", "../ativo-e.json", "--team"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+fixture = "guarda"
+cwd = "repo"
+env = { HADES_NOW = "2026-11-20T12:00:00Z" }
+keep = ["iso"]
+compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
+
+[[case]]
+id = "guarda.cerberus-barra"
+pending = "a pasta de preparo /tmp/minos-XXXXXX do veredito é aleatória e o hades-parity v0.2.6 não a normaliza para <prep> (plano §4.3); o resto da saída bate"
+argv = ["publish", "explicacao", "../cerberus-google.json", "--html", "../out.html"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+fixture = "guarda"
+cwd = "repo"
+env = { HADES_NOW = "2026-11-20T12:00:00Z" }
+keep = ["iso"]
+compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
+
+[[case]]
+id = "guarda.cerberus-atribuicao-escapada"
+argv = ["publish", "explicacao", "../cerberus-atribuicao.json"]
+ts_cmd = ["{skill}/src/cli.ts", "minos"]
+fixture = "guarda"
+cwd = "repo"
+env = { HADES_NOW = "2026-11-20T12:00:00Z" }
+keep = ["iso"]
+compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]

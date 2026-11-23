@@ -1,0 +1,10 @@
+{
+  "schema": "hades.profile/1",
+  "name": "acme-demo",
+  "identity": {
+    "repo": "acme/demo",
+    "vocabulary": [
+      "Pedidoteca"
+    ]
+  }
+}

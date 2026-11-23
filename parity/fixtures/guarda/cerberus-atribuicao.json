@@ -1,0 +1,65 @@
+{
+  "model": "explicacao",
+  "schema": 1,
+  "title": "Como o pedido vira registro",
+  "question": "O que acontece entre a rota POST /pedidos e a gravação no banco?",
+  "summary": "A rota valida o corpo e entrega ao handler, que grava o pedido e o evento na mesma transação. Corpo com campo desconhecido volta 400 antes de chegar ao handler.",
+  "source": {
+    "repo": "dono/repo",
+    "ref": "main@abc1234",
+    "paths": [
+      "src/pedidos/"
+    ]
+  },
+  "flow": [
+    {
+      "step": "A rota valida o corpo",
+      "where": "src/pedidos/rota.ts:42",
+      "detail": "Campo desconhecido volta 400 aqui."
+    },
+    {
+      "step": "O handler grava pedido e evento numa transação",
+      "where": "src/pedidos/criar.handler.ts:18",
+      "detail": null
+    }
+  ],
+  "sections": [
+    {
+      "title": "Validação",
+      "paragraphs": [
+        "`valida` recusa o corpo inteiro no primeiro campo inválido; a resposta lista só esse campo."
+      ],
+      "code": [
+        {
+          "file": "src/pedidos/rota.ts",
+          "lines": "40-48",
+          "lang": "ts",
+          "snippet": "export function valida(corpo: unknown): Pedido {\n  return esquema.parse(corpo);\n}",
+          "note": "A recusa acontece no parse."
+        }
+      ]
+    }
+  ],
+  "files": [
+    {
+      "path": "src/pedidos/rota.ts",
+      "role": "entrada HTTP e validação"
+    },
+    {
+      "path": "src/pedidos/criar.handler.ts",
+      "role": "transação de gravação"
+    }
+  ],
+  "glossary": [
+    {
+      "term": "handler",
+      "meaning": "a classe que executa um caso de uso"
+    }
+  ],
+  "caveats": [
+    "api_key: \"AbCdEfGh12345678ZZ\""
+  ],
+  "nextQuestions": [
+    "Quem consome o evento gravado na transação?"
+  ]
+}
