@@ -11,7 +11,9 @@ use hades_core::env::Env;
 use hades_core::fsx::read_text;
 use hades_core::limits::{self, Janela};
 use hades_core::registry::{iso_from_epoch, open_question_heads};
-use hades_core::work::{DEFAULT_REPORTS, Json, WorkEnv, agent_files, read_json};
+use hades_core::work::{
+    DEFAULT_REPORTS, Json, WorkEnv, WorkOptions, agent_files, load_work_env, read_json,
+};
 use regex::Regex;
 use serde_json::{Value, json};
 
@@ -557,6 +559,23 @@ pub fn collect(
         now_ms,
     })
     .map_err(ErroColeta::Contrato)
+}
+
+/// O `collectOrchestration` padrão da CLI e do app: lê o plano antes do registro, e o `loadWorkEnv` que falha vira
+/// [`ErroColeta::Ambiente`], como o erro que o `publish` do TS captura.
+pub fn collect_from_env(
+    plan: &Path,
+    scope: Escopo,
+    now_ms: i64,
+    env: &Env,
+    cwd: &Path,
+) -> Result<Orquestracao, ErroColeta> {
+    if read_text(plan).is_none() {
+        return Err(ErroColeta::PlanoAusente(plan.to_owned()));
+    }
+    let work =
+        load_work_env(&WorkOptions::default(), env).map_err(|e| ErroColeta::Ambiente(e.message))?;
+    collect(plan, scope, now_ms, &work, env, cwd)
 }
 
 #[cfg(test)]

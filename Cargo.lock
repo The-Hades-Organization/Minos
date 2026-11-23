@@ -3741,7 +3741,7 @@ dependencies = [
  "gpui-component",
  "gpui-pre",
  "gpui-pre-platform",
- "hades-core 0.2.6",
+ "hades-core",
  "hades-ui",
  "minos-core",
  "serde_json",

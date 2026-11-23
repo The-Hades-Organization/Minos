@@ -14,10 +14,9 @@ use hades_core::jsonfmt::json_indent;
 use hades_core::output::{HadesError, out, warn};
 use hades_core::paths::{find_state_dir, skill_root};
 use hades_core::proc::{RunOptions, run, which};
-use hades_core::work::{WorkOptions, load_work_env};
 use minos_core::Escopo;
-use minos_core::coleta::{ErroColeta, collect};
-use minos_core::modelo::{Modelo, Origem, Orquestracao, exemplo, modelos};
+use minos_core::coleta::collect_from_env;
+use minos_core::modelo::{Modelo, Origem, exemplo, modelos};
 use minos_core::publicar::{Pedido, Publicado, TipoRecusa};
 use minos_core::store::{
     ARTIFACT_HOST, ErroLink, gravar_link, is_output_id, parse_artifact_url, saidas,
@@ -160,23 +159,6 @@ fn parse_publish(args: &[String]) -> Result<ArgsPublish, String> {
     }
 }
 
-/// O `collectOrchestration` padrão da CLI: lê o plano antes do registro, e o `loadWorkEnv` que falha vira recusa
-/// `input`, como o erro que o `publish` do TS captura.
-fn collect_cli(
-    env: &Env,
-    cwd: &Path,
-    plan: &Path,
-    scope: Escopo,
-    now_ms: i64,
-) -> Result<Orquestracao, ErroColeta> {
-    if read_text(plan).is_none() {
-        return Err(ErroColeta::PlanoAusente(plan.to_owned()));
-    }
-    let work =
-        load_work_env(&WorkOptions::default(), env).map_err(|e| ErroColeta::Ambiente(e.message))?;
-    collect(plan, scope, now_ms, &work, env, cwd)
-}
-
 /// `publishCommand` (`commands/minos.ts:72`).
 fn publish(env: &Env, args: &[String]) -> Saida {
     let parsed = parse_publish(args).map_err(|m| usage(&m))?;
@@ -184,7 +166,8 @@ fn publish(env: &Env, args: &[String]) -> Saida {
     let state = state_dir(env)?;
     let cwd = std::env::current_dir().unwrap_or_default();
     let now_ms = now_ms(env).map_err(|_| unexpected())?;
-    let coletor = |plan: &Path, scope: Escopo, now: i64| collect_cli(env, &cwd, plan, scope, now);
+    let coletor =
+        |plan: &Path, scope: Escopo, now: i64| collect_from_env(plan, scope, now, env, &cwd);
     let req = Pedido {
         model,
         plan: resolve(Path::new(&parsed.plan))

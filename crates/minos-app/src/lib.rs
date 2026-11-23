@@ -1,5 +1,7 @@
 //! View gpui do Minos, exportada para o app próprio e para o painel do Hades.
 
+mod config;
+mod nova;
 mod service;
 mod view;
 pub mod vm;

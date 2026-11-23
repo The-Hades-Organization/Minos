@@ -1,7 +1,10 @@
-//! `MinosView`: casca (trilho, rodapé) e as telas Publicações e Página do time; Nova página e Configurações ficam
-//! com estado vazio por enquanto.
+//! `MinosView`: casca (trilho, rodapé) e as telas Publicações, Nova página, Página do time e Configurações.
+
+mod tela_config;
+mod tela_nova;
 
 use std::path::PathBuf;
+use std::sync::Arc;
 
 use gpui::{
     App, AppContext, Context, Entity, FocusHandle, Focusable, InteractiveElement, IntoElement,
@@ -19,7 +22,9 @@ use hades_ui::palette;
 use hades_ui::tokens::space;
 use minos_core::Saida;
 
-use crate::service::{self, Dados};
+use crate::config::{self, ConfigLocal, FonteDeConfig};
+use crate::nova::{EstadoPrevia, Rascunho};
+use crate::service::{self, Dados, Gerado};
 use crate::vm::{self, COLUNAS_PUBLICACOES, COLUNAS_TIME, Filtro, Linha, Tarefa, Tela};
 
 pub struct MinosView {
@@ -37,10 +42,20 @@ pub struct MinosView {
     erro_link: Option<String>,
     gravado: Option<String>,
     t_link: Tarefa,
+    rascunho: Rascunho,
+    previa: Option<Result<EstadoPrevia, String>>,
+    t_previa: Tarefa,
+    gerado: Option<Result<Gerado, String>>,
+    t_gerar: Tarefa,
+    fonte_config: Arc<dyn FonteDeConfig>,
+    config: Option<Result<config::Linha, String>>,
+    erro_config: Option<String>,
+    t_config: Tarefa,
 }
 
 impl MinosView {
     pub fn new(env: Env, cwd: PathBuf, foco: FocusHandle, cx: &mut Context<Self>) -> Self {
+        let fonte_config: Arc<dyn FonteDeConfig> = Arc::new(ConfigLocal::new(&env, &cwd));
         let mut view = Self {
             env,
             cwd,
@@ -56,6 +71,15 @@ impl MinosView {
             erro_link: None,
             gravado: None,
             t_link: Tarefa::default(),
+            rascunho: Rascunho::default(),
+            previa: None,
+            t_previa: Tarefa::default(),
+            gerado: None,
+            t_gerar: Tarefa::default(),
+            fonte_config,
+            config: None,
+            erro_config: None,
+            t_config: Tarefa::default(),
         };
         view.recarregar(cx);
         view
@@ -97,6 +121,11 @@ impl MinosView {
     pub fn mudar_tela(&mut self, tela: Tela, cx: &mut Context<Self>) {
         self.tela = tela;
         self.forcar_recarga(cx);
+        match tela {
+            Tela::NovaPagina => self.recalcular_previa(cx),
+            Tela::Configuracoes => self.carregar_config(cx),
+            _ => {}
+        }
     }
 
     fn saida(&self, id: &str) -> Option<&Saida> {
@@ -456,22 +485,6 @@ impl MinosView {
         pagina.child(aviso).fill_child(tabela)
     }
 
-    fn tela_vazia(&self, tela: Tela) -> Page {
-        let (titulo, dica) = match tela {
-            Tela::NovaPagina => (
-                "Nova página ainda não chegou ao app",
-                "Por enquanto, gere pelo terminal: hades minos publish <modelo> <fonte>.",
-            ),
-            _ => (
-                "Configurações ainda não chegaram ao app",
-                "Por enquanto, HADES_MINOS_TEAM se ajusta no config.env da instalação.",
-            ),
-        };
-        Page::new("pagina-vazia")
-            .header(PageHeader::new(tela.rotulo()))
-            .child(EmptyState::new(titulo).hint(dica).fill())
-    }
-
     fn campo_focado(&self, window: &Window, cx: &App) -> bool {
         self.link
             .as_ref()
@@ -488,7 +501,8 @@ impl Render for MinosView {
         let corpo = match self.tela {
             Tela::Publicacoes => self.tela_publicacoes(cx).into_any_element(),
             Tela::Time => self.tela_time(cx).into_any_element(),
-            t => self.tela_vazia(t).into_any_element(),
+            Tela::NovaPagina => self.tela_nova(cx).into_any_element(),
+            Tela::Configuracoes => self.tela_config(cx).into_any_element(),
         };
         div()
             .id("minos")

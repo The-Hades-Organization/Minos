@@ -175,13 +175,20 @@ fn io_input(what: &str, e: impl std::fmt::Display) -> Recusa {
     refuse(TipoRecusa::Input, [format!("{what}: {e}")])
 }
 
-/// `publish` (`minos-publish.ts:63`). O TS deixa subir as falhas de E/S e do Cerberus; aqui viram recusa `input`.
-pub fn publish(req: &Pedido, env: &Env) -> Result<Publicado, Recusa> {
+/// O que o `publish` monta antes de gravar: os dados validados e a página, já liberados pela guarda.
+#[derive(Clone, Debug, PartialEq)]
+pub struct Preparado {
+    pub data: Validado,
+    pub page: String,
+    pub data_json: String,
+}
+
+/// `publish` (`minos-publish.ts:63-89`) até a guarda, sem gravar nada: a prévia do app usa só esta parte.
+pub fn preparar(req: &Pedido, env: &Env) -> Result<Preparado, Recusa> {
     if req.scope == Escopo::Time && !req.team_enabled {
         return Err(refuse(TipoRecusa::TeamOff, TEAM_OFF.map(str::to_owned)));
     }
-    let html_file = req.html_file.as_deref().map(|h| at(&req.cwd, h));
-    if let Some(problem) = html_file.as_deref().and_then(writable_html) {
+    if let Some(problem) = html_target(req).as_deref().and_then(writable_html) {
         return Err(refuse(TipoRecusa::Input, [problem]));
     }
     let data = load_data(req).map_err(|e| match e {
@@ -209,6 +216,25 @@ pub fn publish(req: &Pedido, env: &Env) -> Result<Publicado, Recusa> {
     if !reasons.is_empty() {
         return Err(refuse(TipoRecusa::Guard, reasons));
     }
+    Ok(Preparado {
+        data,
+        page,
+        data_json,
+    })
+}
+
+fn html_target(req: &Pedido) -> Option<PathBuf> {
+    req.html_file.as_deref().map(|h| at(&req.cwd, h))
+}
+
+/// `publish` (`minos-publish.ts:63`). O TS deixa subir as falhas de E/S e do Cerberus; aqui viram recusa `input`.
+pub fn publish(req: &Pedido, env: &Env) -> Result<Publicado, Recusa> {
+    let Preparado {
+        data,
+        page,
+        data_json,
+    } = preparar(req, env)?;
+    let html_file = html_target(req);
 
     if let Some(file) = html_file {
         std::fs::write(&file, &page).map_err(|e| io_input(&file.display().to_string(), e))?;
