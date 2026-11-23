@@ -1448,7 +1448,6 @@ compare = ["stdout", "stderr", "exit", "files:out.html", "files:data/minos/**"]
 
 [[case]]
 id = "guarda.cerberus-barra"
-pending = "a pasta de preparo /tmp/minos-XXXXXX do veredito é aleatória e o hades-parity v0.2.6 não a normaliza para <prep> (plano §4.3); o resto da saída bate"
 argv = ["publish", "explicacao", "../cerberus-google.json", "--html", "../out.html"]
 ts_cmd = ["{skill}/src/cli.ts", "minos"]
 fixture = "guarda"
